@@ -112,7 +112,7 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
        {/* Notification Icon */}
-  <div className="fixed top-4 right-4 z-50">
+  <div className="fixed top-4 right-4 z-50 px-4 py-2 ">
     <button className="relative p-3 bg-white rounded-full shadow-lg hover:shadow-xl transition">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -151,8 +151,10 @@ export default function DashboardPage() {
           <h3 className="text-xl font-semibold mb-6 text-gray-800">Attendance Overview</h3>
           <div className="flex flex-col md:flex-row items-center gap-8">
             <div className="w-48 h-48 relative">
-              <SimplePieChart data={attendancePieData} />
-              <div className="flex justify-center gap-4 mt-4">
+              <div className="w-full h-full flex items-center justify-center relative bottom-4">
+                <SimplePieChart data={attendancePieData} />
+              </div>
+              <div className="flex justify-center gap-4 mt-4 relative bottom-4">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                   <span className="text-sm text-gray-600">Present</span>

@@ -2,29 +2,41 @@
 
 import { ReactNode, useState } from "react";
 import { usePathname } from "next/navigation";
-import { Menu, X, ChevronDown } from "lucide-react";
+import {
+  Menu,
+  X,
+  ChevronDown,
+  BookOpen,
+  ClipboardList,
+  GraduationCap,
+  FolderKanban,
+  CalendarDays,
+  Settings,
+  HelpCircle,
+  MessageSquare,
+  LogOut
+} from "lucide-react";
 
+// ✅ Define links BEFORE using them
 const links = [
-  
-  { name: "Learning Materials", href: "/student/learning-materials" },
-  { name: "Tasks", href: "/student/tasks" },
-  { name: "Exams", href: "/student/exams_and_marks" },
-  { name: "Projects", href: "/student/projects" },
-  { name: "Routine", href: "/student/routine" },
-  // Removed Notifications and Logout
+  { name: "Learning Materials", href: "/student/learning-materials", icon: BookOpen },
+  { name: "Tasks", href: "/student/tasks", icon: ClipboardList },
+  { name: "Exams", href: "/student/exams_and_marks", icon: GraduationCap },
+  { name: "Projects", href: "/student/projects", icon: FolderKanban },
+  { name: "Routine", href: "/student/routine", icon: CalendarDays },
+];
+
+const settingsItems = [
+  { name: "Settings & Privacy", href: "/student/settings-privacy", icon: Settings },
+  { name: "Help & Support", href: "/student/help-support", icon: HelpCircle },
+  { name: "Feedback", href: "/student/feedback", icon: MessageSquare },
+  { name: "Logout", href: "/logout", icon: LogOut },
 ];
 
 export default function StudentLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
-
-  const settingsItems = [
-    { name: "Settings & Privacy", href: "/student/settings-privacy" },
-    { name: "Help & Support", href: "/student/help-support" },
-    { name: "Feedback", href: "/student/feedback" },
-    { name: "Logout", href: "/logout" },
-  ];
 
   return (
     <div className="flex">
@@ -34,45 +46,52 @@ export default function StudentLayout({ children }: { children: ReactNode }) {
         ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} 
         md:translate-x-0`}
       >
+        {/* Top section */}
         <div>
-          <div className="flex items-center mb-4">
-
-          <a href="/student" className="text-xl font-bold text-blue-700 mb-4 pl-4">
+          <a href="/student" className="text-xl font-bold text-blue-700 mb-6 pl-4 block">
             Dashboard
           </a>
-          </div>
+
+          {/* Navigation Links */}
           <nav className="flex-1 flex flex-col gap-2">
             {links.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
-                className={`px-3 py-2 rounded-lg text-gray-700 hover:bg-blue-100 hover:text-blue-700 font-medium transition-colors ${
+                className={`flex items-center gap-3 px-3 py-2 rounded-lg text-gray-700 hover:bg-blue-100 hover:text-blue-700 font-medium transition-colors ${
                   pathname === link.href ? "bg-blue-100 text-blue-700 font-semibold" : ""
                 }`}
               >
+                <link.icon className="w-5 h-5" />
                 {link.name}
               </a>
             ))}
           </nav>
         </div>
 
-        {/* Settings Dropdown at the bottom */}
-        <div className="mt-4">
+        {/* Settings Dropdown */}
+        <div className="relative mt-4">
           <button
-            className="w-full flex justify-between items-center px-3 py-2 rounded-lg text-gray-700 hover:bg-blue-100 hover:text-blue-700 font-medium transition-colors"
-            onClick={() => setSettingsOpen(!settingsOpen)}
-          >
-            Settings
-            <ChevronDown className={`w-5 h-5 transition-transform ${settingsOpen ? "rotate-180" : ""}`} />
-          </button>
+  className="w-full flex justify-between items-center px-3 py-2 rounded-lg text-gray-700 hover:bg-blue-100 hover:text-blue-700 font-medium transition-colors"
+  onClick={() => setSettingsOpen(!settingsOpen)}
+>
+  <div className="flex items-center gap-3">
+    <Settings className="w-5 h-5" />
+    Settings
+  </div>
+  <ChevronDown className={`w-5 h-5 transition-transform ${settingsOpen ? "rotate-180" : ""}`} />
+</button>
+
+
           {settingsOpen && (
-            <div className="mt-2 flex flex-col gap-1 pl-2">
+            <div className="absolute bottom-full mb-2 w-full flex flex-col gap-1 bg-white rounded-lg shadow-md border border-blue-100">
               {settingsItems.map((item) => (
                 <a
                   key={item.name}
                   href={item.href}
-                  className="px-3 py-2 rounded-lg text-gray-600 hover:bg-blue-50 hover:text-blue-700 font-medium transition-colors"
+                  className="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-600 hover:bg-blue-50 hover:text-blue-700 font-medium transition-colors"
                 >
+                  <item.icon className="w-5 h-5" />
                   {item.name}
                 </a>
               ))}
@@ -91,7 +110,7 @@ export default function StudentLayout({ children }: { children: ReactNode }) {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col min-h-screen ml-0 md:ml-64 bg-gradient-to-br from-blue-50 to-purple-100 transition-all duration-300">
-        {/* Top bar */}
+        {/* Top bar for mobile */}
         <header className="w-full flex items-center p-4 bg-white/80 shadow-md md:hidden">
           <button
             className="p-2 rounded-md hover:bg-blue-100 transition"
