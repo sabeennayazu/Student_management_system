@@ -1,124 +1,199 @@
 "use client";
 
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
-import { Bar, Line } from "react-chartjs-2";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css";
+import { CalendarDays, ClipboardList, Clock } from "lucide-react";
+import 'chart.js/auto';
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title, Tooltip, Legend);
-
-export default function DashboardPage() {
-  const gradesData = {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-    datasets: [
-      {
-        label: "GPA",
-        data: [3.2, 3.5, 3.6, 3.8, 3.7, 3.9],
-        borderColor: "rgba(59,130,246,1)",
-        backgroundColor: "rgba(59,130,246,0.2)",
-        tension: 0.3,
-      },
-    ],
-  };
-
-  const attendanceData = {
-    labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-    datasets: [
-      {
-        label: "Attendance",
-        data: [1, 1, 0, 1, 1, 0, 0],
-        backgroundColor: (ctx: any) =>
-          ctx.raw === 1 ? "rgba(34,197,94,0.7)" : "rgba(239,68,68,0.7)",
-        borderRadius: 4,
-      },
-    ],
-  };
-
-  // Quick stats for cards
-  const stats = [
-    { label: "Attendance", value: 92, color: "#22c55e", unit: "%" },
-    { label: "GPA", value: 3.8, color: "#7c3aed", unit: "" },
-    { label: "Pending Assignments", value: 5, color: "#facc15", unit: "" },
-    { label: "Upcoming Exams", value: 2, color: "#3b82f6", unit: "" },
-  ];
+// Custom Circular Progress Component
+const CircularProgress = ({ value, color, unit }: { value: number; color: string; unit: string }) => {
+  const radius = 40;
+  const strokeWidth = 6;
+  const normalizedRadius = radius - strokeWidth * 2;
+  const circumference = normalizedRadius * 2 * Math.PI;
+  const strokeDasharray = `${circumference} ${circumference}`;
+  const strokeDashoffset = circumference - (value / 100) * circumference;
 
   return (
-    <div className="space-y-6 p-6">
-      {/* Top Row: Quick Stats Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {stats.map((stat) => (
-          <div key={stat.label} className="bg-white shadow rounded-xl p-6 flex flex-col items-center h-48">
-            <h3 className="text-lg font-semibold mb-2">{stat.label}</h3>
-            <div className="w-24 h-24">
-              <CircularProgressbar
-                value={stat.value}
-                text={`${stat.value}${stat.unit}`}
-                styles={buildStyles({
-                  pathColor: stat.color,
-                  textColor: "#111827",
-                  trailColor: "#e5e7eb",
-                  textSize: "24px",
-                })}
-              />
+    <div className="relative w-24 h-24 flex items-center justify-center">
+      <svg className="absolute inset-0" height={radius * 2} width={radius * 2}>
+        <circle
+          stroke="#e5e7eb"
+          fill="transparent"
+          strokeWidth={strokeWidth}
+          r={normalizedRadius}
+          cx={radius}
+          cy={radius}
+        />
+        <circle
+          stroke={color}
+          fill="transparent"
+          strokeWidth={strokeWidth}
+          strokeDasharray={strokeDasharray}
+          strokeDashoffset={strokeDashoffset}
+          strokeLinecap="round"
+          r={normalizedRadius}
+          cx={radius}
+          cy={radius}
+          style={{ transition: "stroke-dashoffset 1.5s ease-in-out" }}
+        />
+      </svg>
+      <span className="absolute text-sm font-bold text-gray-800" style={{ transform: "translateX(-0.1cm)" }}>
+        {value}{unit}
+      </span>
+    </div>
+  );
+};
+
+// Simple Pie Chart Component
+const SimplePieChart = ({ data }: { data: { name: string; value: number; color: string }[] }) => {
+  const total = data.reduce((sum, item) => sum + item.value, 0);
+  const centerX = 100;
+  const centerY = 100;
+  const radius = 80;
+
+  let currentAngle = 0;
+  const segments = data.map(item => {
+    const angle = (item.value / total) * 360;
+    const startAngle = currentAngle;
+    const endAngle = currentAngle + angle;
+
+    const x1 = centerX + radius * Math.cos((startAngle - 90) * Math.PI / 180);
+    const y1 = centerY + radius * Math.sin((startAngle - 90) * Math.PI / 180);
+    const x2 = centerX + radius * Math.cos((endAngle - 90) * Math.PI / 180);
+    const y2 = centerY + radius * Math.sin((endAngle - 90) * Math.PI / 180);
+
+    const largeArcFlag = angle > 180 ? 1 : 0;
+    const pathData = `M ${centerX} ${centerY} L ${x1} ${y1} A ${radius} ${radius} 0 ${largeArcFlag} 1 ${x2} ${y2} Z`;
+
+    currentAngle += angle;
+
+    return { pathData, color: item.color, name: item.name, value: item.value };
+  });
+
+  return (
+    <div className="w-full h-full flex items-center justify-center">
+      <svg width="200" height="200" viewBox="0 0 200 200">
+        {segments.map((segment, index) => (
+          <path key={index} d={segment.pathData} fill={segment.color} stroke="white" strokeWidth="2" />
+        ))}
+      </svg>
+    </div>
+  );
+};
+
+export default function DashboardPage() {
+  // Attendance numbers
+  const workingDays = 100;
+  const presentDays = 92;
+  const absentDays = workingDays - presentDays;
+  const attendancePercent = Math.round((presentDays / workingDays) * 100);
+
+  // Stats row
+  const stats = [
+    { label: "Attendance", value: attendancePercent, color: "#22c55e", unit: "%" },
+    { label: "Pending Assignments", value: 5, icon: <ClipboardList className="text-yellow-500 w-8 h-8" /> },
+    { label: "Upcoming Exam", value: "Sep 15, 2025", icon: <CalendarDays className="text-blue-500 w-8 h-8" /> },
+    { label: "Project Due", value: "Sep 20, 2025", icon: <Clock className="text-red-500 w-8 h-8" /> },
+  ];
+
+  // Attendance pie data
+  const attendancePieData = [
+    { name: "Present", value: presentDays, color: "#22c55e" },
+    { name: "Absent", value: absentDays, color: "#ef4444" },
+  ];
+
+  // Next class info
+  const nextClass = {
+    day: "Wednesday",
+    date: "Aug 28, 2025",
+    subject: "Mathematics",
+    time: "10:00 AM - 11:00 AM",
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+       {/* Notification Icon */}
+  <div className="fixed top-4 right-4 z-50">
+    <button className="relative p-3 bg-white rounded-full shadow-lg hover:shadow-xl transition">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-6 w-6 text-blue-600"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+      </svg>
+      {/* Optional notification badge */}
+      <span className="absolute top-0 right-0 inline-flex items-center justify-center w-4 h-4 text-xs font-bold text-white bg-red-500 rounded-full">3</span>
+    </button>
+  </div>
+
+      <div className="space-y-8 p-8 max-w-7xl mx-auto">
+        {/* Stats */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {stats.map((stat) => (
+            <div key={stat.label} className="bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 rounded-2xl p-6 flex flex-col items-center h-44 justify-center border border-white/20">
+              <h3 className="text-lg font-semibold mb-3 text-gray-700">{stat.label}</h3>
+              {"color" in stat ? (
+                <CircularProgress value={Number(stat.value)} color={stat.color ?? "#000"} unit={stat.unit ?? ""} />
+              ) : (
+                <div className="flex flex-col items-center space-y-2">
+                  {stat.icon}
+                  <span className="text-lg font-bold text-gray-800">{stat.value}</span>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Attendance Overview */}
+        <div className="bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 rounded-2xl p-8 border border-white/20">
+          <h3 className="text-xl font-semibold mb-6 text-gray-800">Attendance Overview</h3>
+          <div className="flex flex-col md:flex-row items-center gap-8">
+            <div className="w-48 h-48 relative">
+              <SimplePieChart data={attendancePieData} />
+              <div className="flex justify-center gap-4 mt-4">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                  <span className="text-sm text-gray-600">Present</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                  <span className="text-sm text-gray-600">Absent</span>
+                </div>
+              </div>
+            </div>
+            <div className="flex-1 grid grid-cols-2 gap-3 text-gray-700 w-full">
+              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-4 text-center shadow-sm">
+                <div className="text-sm font-medium text-gray-600">Working Days</div>
+                <div className="text-2xl font-bold text-gray-800 mt-1">{workingDays}</div>
+              </div>
+              <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-4 text-center shadow-sm">
+                <div className="text-sm font-medium text-gray-600">Present Days</div>
+                <div className="text-2xl font-bold text-gray-800 mt-1">{presentDays}</div>
+              </div>
+              <div className="bg-gradient-to-br from-red-50 to-rose-50 rounded-xl p-4 text-center shadow-sm">
+                <div className="text-sm font-medium text-gray-600">Absent Days</div>
+                <div className="text-2xl font-bold text-gray-800 mt-1">{absentDays}</div>
+              </div>
+              <div className="bg-gradient-to-br from-purple-50 to-violet-50 rounded-xl p-4 text-center shadow-sm">
+                <div className="text-sm font-medium text-gray-600">Attendance</div>
+                <div className="text-2xl font-bold text-gray-800 mt-1">{attendancePercent}%</div>
+              </div>
             </div>
           </div>
-        ))}
-      </div>
-
-      {/* Middle Row: Charts and Activity */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* GPA Trend */}
-        <div className="bg-white shadow rounded-xl p-6">
-          <h3 className="text-xl font-semibold mb-4">GPA Trend</h3>
-          <Line data={gradesData} options={{ responsive: true, plugins: { legend: { display: false } } }} />
         </div>
 
-        {/* Attendance Trend */}
-        <div className="bg-white shadow rounded-xl p-6">
-          <h3 className="text-xl font-semibold mb-4">Weekly Attendance</h3>
-          <Bar
-            data={attendanceData}
-            options={{
-              responsive: true,
-              plugins: { legend: { display: false } },
-              scales: { y: { ticks: { stepSize: 1 }, min: 0, max: 1 } },
-            }}
-          />
-        </div>
-      </div>
-
-      {/* Bottom Row: Recent Activity + Quick Links */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Recent Activity */}
-        <div className="bg-white shadow rounded-xl p-6">
-          <h3 className="text-xl font-semibold mb-4">Recent Activity</h3>
-          <ul className="space-y-2 text-gray-700 list-disc list-inside">
-            <li>Submitted Assignment 3 in Math</li>
-            <li>Completed Quiz in Science</li>
-            <li>Received message from Teacher</li>
-            <li>Updated profile information</li>
-            <li>Checked exam schedule</li>
-          </ul>
-        </div>
-
-        {/* Quick Links */}
-        <div className="bg-white shadow rounded-xl p-6">
-          <h3 className="text-xl font-semibold mb-4">Quick Links</h3>
-          <div className="grid grid-cols-2 gap-4">
-            <button className="bg-blue-100 text-blue-700 font-semibold py-2 px-4 rounded-lg hover:bg-blue-200 transition">Assignments</button>
-            <button className="bg-green-100 text-green-700 font-semibold py-2 px-4 rounded-lg hover:bg-green-200 transition">Exams</button>
-            <button className="bg-yellow-100 text-yellow-700 font-semibold py-2 px-4 rounded-lg hover:bg-yellow-200 transition">Grades</button>
-            <button className="bg-purple-100 text-purple-700 font-semibold py-2 px-4 rounded-lg hover:bg-purple-200 transition">Learning Materials</button>
+        {/* Next Class */}
+        <div className="bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 rounded-2xl p-8 border border-white/20">
+          <h3 className="text-xl font-semibold mb-4 text-gray-800">Next Class</h3>
+          <div className="flex items-center gap-6">
+            <div className="flex-1">
+              <div className="text-gray-600 font-medium">{nextClass.day}, {nextClass.date}</div>
+              <div className="text-2xl font-bold text-gray-800 mt-1">{nextClass.subject}</div>
+              <div className="text-gray-500 mt-1">{nextClass.time}</div>
+            </div>
+            <CalendarDays className="w-12 h-12 text-blue-500" />
           </div>
         </div>
       </div>
