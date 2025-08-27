@@ -13,7 +13,7 @@ import {
   CalendarDays,
   Settings,
   HelpCircle,
-  MessageSquare,
+  User,
   LogOut
 } from "lucide-react";
 
@@ -29,7 +29,7 @@ const links = [
 const settingsItems = [
   { name: "Settings & Privacy", href: "/student/settings-privacy", icon: Settings },
   { name: "Help & Support", href: "/student/help-support", icon: HelpCircle },
-  { name: "Feedback", href: "/student/feedback", icon: MessageSquare },
+  { name: "Profile", href: "/student/profile", icon: User },
   { name: "Logout", href: "/logout", icon: LogOut },
 ];
 
