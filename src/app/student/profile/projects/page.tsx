@@ -1,23 +1,150 @@
 "use client";
+import { useState } from "react";
+import { MoreVertical, FolderOpen, Clock, CheckCircle, Circle, Plus, Calendar, User } from "lucide-react";
 
 export default function ProjectsPage() {
+  const [openMenu, setOpenMenu] = useState(false);
+
   const projects = [
-    { title: "Portfolio Website", status: "Completed" },
-    { title: "E-commerce App", status: "In Progress" },
-    { title: "Chat Application", status: "Pending" },
+    { 
+      title: "Traffic Lights", 
+      status: "Completed", 
+      description: "Arduino-based traffic light control system",
+      dueDate: "2025-07-15",
+      progress: 100,
+      team: ["John", "Alice"]
+    },
+    { 
+      title: "Line Following Robot", 
+      status: "In Progress", 
+      description: "Autonomous robot using sensors and motors",
+      dueDate: "2025-09-30",
+      progress: 65,
+      team: ["John", "Bob", "Carol"]
+    },
+    { 
+      title: "Decibel Meter", 
+      status: "Pending", 
+      description: "Sound level measurement device",
+      dueDate: "2025-10-15",
+      progress: 20,
+      team: ["John"]
+    },
+    { 
+      title: "Smart Home Automation", 
+      status: "Planned", 
+      description: "IoT-based home control system",
+      dueDate: "2025-11-30",
+      progress: 5,
+      team: ["John", "David"]
+    },
   ];
 
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "Completed": return "bg-emerald-50 text-emerald-700 border-emerald-200";
+      case "In Progress": return "bg-blue-50 text-blue-700 border-blue-200";
+      case "Pending": return "bg-orange-50 text-orange-700 border-orange-200";
+      case "Planned": return "bg-purple-50 text-purple-700 border-purple-200";
+      default: return "bg-gray-50 text-gray-700 border-gray-200";
+    }
+  };
+
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case "Completed": return <CheckCircle className="w-4 h-4" />;
+      case "In Progress": return <Clock className="w-4 h-4" />;
+      default: return <Circle className="w-4 h-4" />;
+    }
+  };
+
+  const getProgressColor = (progress: number) => {
+    if (progress >= 80) return "bg-emerald-500";
+    if (progress >= 50) return "bg-blue-500";
+    if (progress >= 20) return "bg-orange-500";
+    return "bg-purple-500";
+  };
+
   return (
-    <div className="p-6 bg-white shadow rounded-xl">
-      <h2 className="text-xl font-bold mb-4">Projects</h2>
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {projects.map((project) => (
-          <div key={project.title} className="border rounded-xl p-4 hover:shadow-md">
-            <h3 className="font-semibold">{project.title}</h3>
-            <p className="text-sm text-gray-500 mt-2">{project.status}</p>
+    <div className="p-8">
+      <div className="flex justify-between items-center mb-8">
+        <div>
+          <h1 className="text-2xl font-light text-gray-900 mb-2">Projects Portfolio</h1>
+          <p className="text-gray-600">Manage and track your academic and personal projects</p>
+        </div>
+
+        <div className="relative">
+          <button
+            className="p-3 rounded-xl hover:bg-gray-50 transition-colors duration-200"
+            onClick={() => setOpenMenu(!openMenu)}
+          >
+            <MoreVertical className="w-5 h-5 text-gray-400" />
+          </button>
+          {openMenu && (
+            <div className="absolute right-0 mt-2 w-44 bg-white rounded-xl shadow-lg border border-gray-100 z-50 overflow-hidden">
+              <button className="flex items-center gap-3 w-full text-left px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors duration-200">
+                <Plus className="w-4 h-4" />
+                New Project
+              </button>
+              <button className="flex items-center gap-3 w-full text-left px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors duration-200">
+                <FolderOpen className="w-4 h-4" />
+                Manage Projects
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {projects.map((project, index) => (
+          <div
+            key={index}
+            className="group p-6 rounded-xl border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all duration-200 bg-white"
+          >
+            <div className="flex items-start justify-between mb-4">
+              <div className="flex-1">
+                <h3 className="font-semibold text-gray-900 mb-2">{project.title}</h3>
+                <p className="text-sm text-gray-600 mb-3">{project.description}</p>
+              </div>
+              <span className={`flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(project.status)}`}>
+                {getStatusIcon(project.status)}
+                {project.status}
+              </span>
+            </div>
+
+            <div className="space-y-3">
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-gray-600">Progress</span>
+                <span className="font-medium text-gray-900">{project.progress}%</span>
+              </div>
+              <div className="w-full bg-gray-100 rounded-full h-2">
+                <div
+                  className={`h-2 rounded-full transition-all duration-300 ${getProgressColor(project.progress)}`}
+                  style={{ width: `${project.progress}%` }}
+                ></div>
+              </div>
+
+              <div className="flex items-center justify-between pt-2">
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <Calendar className="w-4 h-4" />
+                  {project.dueDate}
+                </div>
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <User className="w-4 h-4" />
+                  {project.team.length} member{project.team.length > 1 ? 's' : ''}
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-4 pt-4 border-t border-gray-50">
+              <button className="text-sm text-gray-600 hover:text-gray-900 transition-colors duration-200 font-medium">
+                View Details →
+              </button>
+            </div>
           </div>
         ))}
       </div>
+
     </div>
   );
 }

@@ -7,13 +7,14 @@ import {
   X,
   ChevronDown,
   BookOpen,
+  User,
   ClipboardList,
   GraduationCap,
   FolderKanban,
   CalendarDays,
   Settings,
   HelpCircle,
-  User,
+  Users,
   LogOut
 } from "lucide-react";
 
@@ -21,9 +22,10 @@ import {
 const links = [
   { name: "Learning Materials", href: "/student/learning-materials", icon: BookOpen },
   { name: "Tasks", href: "/student/tasks", icon: ClipboardList },
-  { name: "Exams", href: "/student/exams_and_marks", icon: GraduationCap },
+  { name: "Exams", href: "/student/exams", icon: GraduationCap },
   { name: "Projects", href: "/student/projects", icon: FolderKanban },
   { name: "Routine", href: "/student/routine", icon: CalendarDays },
+  { name: "Events", href: "/student/profile/events", icon: Users },
 ];
 
 const settingsItems = [
@@ -42,7 +44,7 @@ export default function StudentLayout({ children }: { children: ReactNode }) {
     <div className="flex">
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 h-screen w-64 bg-white/90 border-r border-blue-100 shadow-lg p-6 flex flex-col justify-between transform transition-transform duration-300 z-50
+        className={`fixed top-0 left-0 h-screen w-64 bg-white border-r border-blue-100 shadow-lg p-6 flex flex-col justify-between transform transition-transform duration-300 z-50
         ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} 
         md:translate-x-0`}
       >

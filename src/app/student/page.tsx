@@ -105,7 +105,7 @@ export default function DashboardPage() {
   const nextClass = {
     day: "Wednesday",
     date: "Aug 28, 2025",
-    subject: "Mathematics",
+    subject: "IOT and Robotics",
     time: "10:00 AM - 11:00 AM",
   };
 
