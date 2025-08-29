@@ -31,22 +31,7 @@ export default function CourseProgressPage() {
       instructor: "Mr. Wilson",
       status: "In Progress"
     },
-    { 
-      name: "Drone Technology Basics", 
-      progress: 40, 
-      category: "Technology",
-      duration: "6 weeks",
-      instructor: "Dr. Brown",
-      status: "In Progress"
-    },
-    { 
-      name: "3D Printing & CAD Design", 
-      progress: 50, 
-      category: "Design",
-      duration: "14 weeks",
-      instructor: "Ms. Davis",
-      status: "In Progress"
-    },
+  
   ];
 
   const getCategoryColor = (category: string) => {
@@ -67,7 +52,7 @@ export default function CourseProgressPage() {
   };
 
   return (
-    <div className="p-8">
+    <div className="p-8 border-l-8 border-green-500 bg-white rounded-lg shadow-sm">
       <div className="flex justify-between items-center mb-8">
         <div>
           <h1 className="text-2xl font-light text-gray-900 mb-2">Course Progress</h1>
