@@ -1,10 +1,24 @@
 "use client";
 
-import { useState } from "react";
-import { MoreVertical, FileText, Calendar, TrendingUp, Award, BarChart3, Plus } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { MoreVertical, FileText, Calendar, Award, BarChart3, Plus } from "lucide-react";
 
 export default function AssessmentsPage() {
   const [openMenu, setOpenMenu] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setOpenMenu(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const assessments = [
     { 
@@ -69,14 +83,14 @@ export default function AssessmentsPage() {
   const averageScore = Math.round(assessments.reduce((sum, a) => sum + a.score, 0) / assessments.length);
 
   return (
-    <div className="p-8 border-l-8 border-yellow-500 bg-white rounded-lg shadow-sm">
+    <div className="p-8 border-l-8 border-green-500 bg-white rounded-lg shadow-sm">
       <div className="flex justify-between items-center mb-8">
         <div>
           <h1 className="text-2xl font-light text-gray-900 mb-2">Academic Assessments</h1>
           <p className="text-gray-600">Track your academic performance and progress</p>
         </div>
 
-        <div className="relative">
+        <div className="relative" ref={menuRef}>
           <button
             className="p-3 rounded-xl hover:bg-gray-50 transition-colors duration-200"
             onClick={() => setOpenMenu(!openMenu)}
@@ -119,7 +133,6 @@ export default function AssessmentsPage() {
           </div>
           <p className="text-2xl font-semibold text-gray-900">{assessments.length}</p>
         </div>
-
       </div>
 
       {/* Assessments List */}
@@ -152,10 +165,10 @@ export default function AssessmentsPage() {
             <div className="flex items-center justify-between pt-4 border-t border-gray-50">
               <div className="flex items-center gap-2 text-sm text-gray-600">
                 <Calendar className="w-4 h-4" />
-                {new Date(assessment.date).toLocaleDateString('en-US', { 
-                  year: 'numeric', 
-                  month: 'short', 
-                  day: 'numeric' 
+                {new Date(assessment.date).toLocaleDateString("en-US", { 
+                  year: "numeric", 
+                  month: "short", 
+                  day: "numeric" 
                 })}
               </div>
               <button className="text-sm text-gray-600 hover:text-gray-900 transition-colors duration-200 font-medium">

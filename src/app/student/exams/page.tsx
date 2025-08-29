@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import Notification from "../components/notification/page";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import { Clock, MapPin, FileText, BookOpen, CalendarDays, Book } from "lucide-react";
+import { Clock, MapPin, CalendarDays, Book, Laptop } from "lucide-react";
 
 export default function ExamsPage() {
   const previousExams = [
@@ -28,7 +29,7 @@ export default function ExamsPage() {
   const tileClassName = ({ date, view }: { date: Date; view: string }) => {
     const dateStr = date.toISOString().split("T")[0];
     if (examDates.includes(dateStr)) {
-      return "bg-blue-500 text-white rounded-md"; // highlight exam dates
+      return "bg-red-500 text-white rounded-md"; // highlight exam dates
     }
     return "";
   };
@@ -36,9 +37,20 @@ export default function ExamsPage() {
   return (
     <div className="p-8 space-y-10">
       {/* Top Row */}
+      <Notification/>
+       {/* Online Exam Card */}
+      <div className="p-4 bg-white border-l-4 border-indigo-500 rounded-lg shadow-md flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <Laptop className="w-5 h-5 text-indigo-600" />
+          <p className="font-medium text-black">Take Online Exam</p>
+        </div>
+        <button className="px-4 py-2 bg-indigo-600 text-white text-sm rounded-lg hover:bg-indigo-700 transition">
+          Start Exam →
+        </button>
+      </div>
       <div className="grid md:grid-cols-2 gap-6">
         {/* Previous Exams */}
-        <div className="p-6 bg-white border-l-4 border-emerald-500 rounded-lg shadow-sm">
+        <div className="p-6 bg-white border-l-4 border-emerald-500 rounded-lg shadow-md">
           <h2 className="text-lg font-bold text-black mb-4">Previous Exams</h2>
           <ul className="space-y-3 text-black">
             {previousExams.map((exam, index) => (
@@ -59,7 +71,7 @@ export default function ExamsPage() {
         </div>
 
         {/* Upcoming Exams */}
-        <div className="p-6 bg-white border-l-4 border-blue-500 rounded-lg shadow-sm">
+        <div className="p-6 bg-white border-l-4 border-blue-500 rounded-lg shadow-md">
           <h2 className="text-lg font-bold text-black mb-4">Upcoming Exams</h2>
           <ul className="space-y-3 text-black">
             {upcomingExams.map((exam, index) => (
@@ -88,7 +100,7 @@ export default function ExamsPage() {
       {/* Middle Row */}
       <div className="grid md:grid-cols-2 gap-6">
         {/* Exam Calendar */}
-        <div className="p-6 bg-white rounded-lg shadow">
+        <div className="p-6 bg-white border-l-4 border-purple-500 rounded-lg shadow-md">
           <h2 className="text-lg font-bold text-black mb-4">Exam Calendar</h2>
           <Calendar
             className="rounded-lg border w-full text-black"
@@ -111,13 +123,13 @@ export default function ExamsPage() {
         </div>
 
         {/* Exam Routine */}
-        <div className="p-6 bg-white rounded-lg shadow">
+        <div className="p-6 bg-white border-l-4 border-rose-500 rounded-lg shadow-md">
           <h2 className="text-lg font-bold text-black mb-4">Exam Routine</h2>
           <ul className="space-y-4 text-black">
             {examRoutine.map((exam, index) => (
               <li
                 key={index}
-                className="p-3 rounded-lg border hover:shadow-sm transition bg-gray-50"
+                className="p-3 rounded-lg border hover:shadow-md transition bg-gray-50"
               >
                 <p className="flex items-center gap-2 font-semibold">
                   <Book className="w-4 h-4 text-blue-600" /> {exam.subject}
@@ -137,34 +149,7 @@ export default function ExamsPage() {
         </div>
       </div>
 
-      {/* Bottom Row: Guidelines & Tips */}
-      <div className="grid md:grid-cols-2 gap-6">
-        {/* Guidelines */}
-        <div className="p-6 bg-blue-50 rounded-lg shadow">
-          <h2 className="text-lg font-bold text-black mb-4 flex items-center gap-2">
-            <FileText className="w-5 h-5 text-blue-600" /> Exam Guidelines
-          </h2>
-          <ul className="list-disc pl-6 text-gray-800 space-y-2">
-            <li>Arrive at least 30 minutes before the exam.</li>
-            <li>Bring your ID card and admit card.</li>
-            <li>No electronic devices allowed except calculators (if permitted).</li>
-            <li>Follow all invigilator instructions strictly.</li>
-          </ul>
-        </div>
-
-        {/* Preparation Tips */}
-        <div className="p-6 bg-emerald-50 rounded-lg shadow">
-          <h2 className="text-lg font-bold text-black mb-4 flex items-center gap-2">
-            <BookOpen className="w-5 h-5 text-emerald-600" /> Preparation Tips
-          </h2>
-          <ul className="list-disc pl-6 text-gray-800 space-y-2">
-            <li>Revise all key formulas and definitions.</li>
-            <li>Practice past question papers for time management.</li>
-            <li>Focus on weak areas at least 2 weeks before the exam.</li>
-            <li>Take proper rest and avoid last-minute cramming.</li>
-          </ul>
-        </div>
-      </div>
+     
     </div>
   );
 }

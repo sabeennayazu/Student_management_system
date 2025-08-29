@@ -1,10 +1,30 @@
 "use client";
 
-import { useState } from "react";
-import { MoreVertical, MessageSquare, Calendar, Plus } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { MoreVertical, Calendar, Plus } from "lucide-react";
 
 export default function FeedbackPage() {
   const [openMenu, setOpenMenu] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setOpenMenu(false);
+      }
+    };
+
+    if (openMenu) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [openMenu]);
 
   const feedbacks = [
     { 
@@ -18,13 +38,11 @@ export default function FeedbackPage() {
     { 
       name: "Mentor Jane", 
       role: "Robotics tutor",
-      comment: " Focus more on component optimization and state management. I'd recommend practicing with more complex projects to strengthen your foundation.",
+      comment: "Focus more on component optimization and state management. I'd recommend practicing with more complex projects to strengthen your foundation.",
       date: "2025-08-18",
       subject: "Computer Science",
       avatar: "MJ"
     },
-    
-  
   ];
 
   return (
@@ -35,7 +53,7 @@ export default function FeedbackPage() {
           <p className="text-gray-600">Feedback and comments from your instructors</p>
         </div>
 
-        <div className="relative">
+        <div className="relative" ref={menuRef}>
           <button
             className="p-3 rounded-xl hover:bg-gray-50 transition-colors duration-200"
             onClick={() => setOpenMenu(!openMenu)}
@@ -79,10 +97,10 @@ export default function FeedbackPage() {
                 <div className="flex items-center justify-between pt-4 border-t border-gray-50">
                   <div className="flex items-center gap-2 text-sm text-gray-600">
                     <Calendar className="w-4 h-4" />
-                    {new Date(feedback.date).toLocaleDateString('en-US', { 
-                      year: 'numeric', 
-                      month: 'short', 
-                      day: 'numeric' 
+                    {new Date(feedback.date).toLocaleDateString("en-US", { 
+                      year: "numeric", 
+                      month: "short", 
+                      day: "numeric" 
                     })}
                   </div>
                   <button className="text-sm text-gray-600 hover:text-gray-900 transition-colors duration-200 font-medium">

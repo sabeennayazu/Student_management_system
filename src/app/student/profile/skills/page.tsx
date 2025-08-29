@@ -1,10 +1,30 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { MoreVertical, Plus, Award } from "lucide-react";
 
 export default function SkillsPage() {
   const [openMenu, setOpenMenu] = useState(false);
+  const menuRef = useRef<HTMLDivElement | null>(null);
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setOpenMenu(false);
+      }
+    }
+
+    if (openMenu) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [openMenu]);
 
   const skills = [
     "Arduino Programming",
@@ -20,7 +40,7 @@ export default function SkillsPage() {
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-2xl font-bold text-black">Skills & Expertise</h1>
 
-        <div className="relative">
+        <div className="relative" ref={menuRef}>
           <button
             className="p-2 rounded-full hover:bg-gray-100"
             onClick={() => setOpenMenu(!openMenu)}

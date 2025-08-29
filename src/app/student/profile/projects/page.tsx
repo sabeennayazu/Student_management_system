@@ -1,60 +1,97 @@
 "use client";
-import { useState } from "react";
-import { MoreVertical, FolderOpen, Clock, CheckCircle, Circle, Plus, Calendar, User } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import {
+  MoreVertical,
+  FolderOpen,
+  Clock,
+  CheckCircle,
+  Circle,
+  Plus,
+  Calendar,
+  User,
+} from "lucide-react";
 
 export default function ProjectsPage() {
   const [openMenu, setOpenMenu] = useState(false);
+  const menuRef = useRef<HTMLDivElement | null>(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setOpenMenu(false);
+      }
+    };
+
+    if (openMenu) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [openMenu]);
 
   const projects = [
-    { 
-      title: "Traffic Lights", 
-      status: "Completed", 
+    {
+      title: "Traffic Lights",
+      status: "Completed",
       description: "Arduino-based traffic light control system",
       dueDate: "2025-07-15",
       progress: 100,
-      team: ["John", "Alice"]
+      team: ["John", "Alice"],
     },
-    { 
-      title: "Line Following Robot", 
-      status: "In Progress", 
+    {
+      title: "Line Following Robot",
+      status: "In Progress",
       description: "Autonomous robot using sensors and motors",
       dueDate: "2025-09-30",
       progress: 65,
-      team: ["John", "Bob", "Carol"]
+      team: ["John", "Bob", "Carol"],
     },
-    { 
-      title: "Decibel Meter", 
-      status: "Pending", 
+    {
+      title: "Decibel Meter",
+      status: "Pending",
       description: "Sound level measurement device",
       dueDate: "2025-10-15",
       progress: 20,
-      team: ["John"]
+      team: ["John"],
     },
-    { 
-      title: "Smart Home Automation", 
-      status: "Planned", 
+    {
+      title: "Smart Home Automation",
+      status: "Planned",
       description: "IoT-based home control system",
       dueDate: "2025-11-30",
       progress: 5,
-      team: ["John", "David"]
+      team: ["John", "David"],
     },
   ];
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "Completed": return "bg-emerald-50 text-emerald-700 border-emerald-200";
-      case "In Progress": return "bg-blue-50 text-blue-700 border-blue-200";
-      case "Pending": return "bg-orange-50 text-orange-700 border-orange-200";
-      case "Planned": return "bg-purple-50 text-purple-700 border-purple-200";
-      default: return "bg-gray-50 text-gray-700 border-gray-200";
+      case "Completed":
+        return "bg-emerald-50 text-emerald-700 border-emerald-200";
+      case "In Progress":
+        return "bg-blue-50 text-blue-700 border-blue-200";
+      case "Pending":
+        return "bg-orange-50 text-orange-700 border-orange-200";
+      case "Planned":
+        return "bg-purple-50 text-purple-700 border-purple-200";
+      default:
+        return "bg-gray-50 text-gray-700 border-gray-200";
     }
   };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case "Completed": return <CheckCircle className="w-4 h-4" />;
-      case "In Progress": return <Clock className="w-4 h-4" />;
-      default: return <Circle className="w-4 h-4" />;
+      case "Completed":
+        return <CheckCircle className="w-4 h-4" />;
+      case "In Progress":
+        return <Clock className="w-4 h-4" />;
+      default:
+        return <Circle className="w-4 h-4" />;
     }
   };
 
@@ -69,11 +106,16 @@ export default function ProjectsPage() {
     <div className="p-8 border-l-8 border-red-500 bg-white rounded-lg shadow-sm">
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="text-2xl font-light text-gray-900 mb-2">Projects Portfolio</h1>
-          <p className="text-gray-600">Manage and track your academic and personal projects</p>
+          <h1 className="text-2xl font-light text-gray-900 mb-2">
+            Projects Portfolio
+          </h1>
+          <p className="text-gray-600">
+            Manage and track your academic and personal projects
+          </p>
         </div>
 
-        <div className="relative">
+        {/* Dropdown Menu */}
+        <div className="relative" ref={menuRef}>
           <button
             className="p-3 rounded-xl hover:bg-gray-50 transition-colors duration-200"
             onClick={() => setOpenMenu(!openMenu)}
@@ -95,6 +137,7 @@ export default function ProjectsPage() {
         </div>
       </div>
 
+      {/* Project Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {projects.map((project, index) => (
           <div
@@ -103,10 +146,16 @@ export default function ProjectsPage() {
           >
             <div className="flex items-start justify-between mb-4">
               <div className="flex-1">
-                <h3 className="font-semibold text-gray-900 mb-2">{project.title}</h3>
+                <h3 className="font-semibold text-gray-900 mb-2">
+                  {project.title}
+                </h3>
                 <p className="text-sm text-gray-600 mb-3">{project.description}</p>
               </div>
-              <span className={`flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(project.status)}`}>
+              <span
+                className={`flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(
+                  project.status
+                )}`}
+              >
                 {getStatusIcon(project.status)}
                 {project.status}
               </span>
@@ -115,11 +164,15 @@ export default function ProjectsPage() {
             <div className="space-y-3">
               <div className="flex items-center justify-between text-sm">
                 <span className="text-gray-600">Progress</span>
-                <span className="font-medium text-gray-900">{project.progress}%</span>
+                <span className="font-medium text-gray-900">
+                  {project.progress}%
+                </span>
               </div>
               <div className="w-full bg-gray-100 rounded-full h-2">
                 <div
-                  className={`h-2 rounded-full transition-all duration-300 ${getProgressColor(project.progress)}`}
+                  className={`h-2 rounded-full transition-all duration-300 ${getProgressColor(
+                    project.progress
+                  )}`}
                   style={{ width: `${project.progress}%` }}
                 ></div>
               </div>
@@ -131,7 +184,8 @@ export default function ProjectsPage() {
                 </div>
                 <div className="flex items-center gap-2 text-sm text-gray-600">
                   <User className="w-4 h-4" />
-                  {project.team.length} member{project.team.length > 1 ? 's' : ''}
+                  {project.team.length} member
+                  {project.team.length > 1 ? "s" : ""}
                 </div>
               </div>
             </div>
@@ -144,7 +198,6 @@ export default function ProjectsPage() {
           </div>
         ))}
       </div>
-
     </div>
   );
 }

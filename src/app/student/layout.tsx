@@ -25,7 +25,7 @@ const links = [
   { name: "Exams", href: "/student/exams", icon: GraduationCap },
   { name: "Projects", href: "/student/projects", icon: FolderKanban },
   { name: "Routine", href: "/student/routine", icon: CalendarDays },
-  { name: "Events", href: "/student/profile/events", icon: Users },
+  { name: "Events", href: "/student/events", icon: Users },
 ];
 
 const settingsItems = [

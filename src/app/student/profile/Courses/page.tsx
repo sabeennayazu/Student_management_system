@@ -1,10 +1,18 @@
 "use client";
 
-import { useState } from "react";
-import { MoreVertical, BookOpen, Clock, CheckCircle, Play, Eye } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { 
+  MoreVertical, 
+  BookOpen, 
+  Clock, 
+  CheckCircle, 
+  User, 
+  Eye 
+} from "lucide-react";
 
 export default function CourseProgressPage() {
   const [openMenu, setOpenMenu] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   const courses = [
     { 
@@ -31,7 +39,6 @@ export default function CourseProgressPage() {
       instructor: "Mr. Wilson",
       status: "In Progress"
     },
-  
   ];
 
   const getCategoryColor = (category: string) => {
@@ -51,15 +58,28 @@ export default function CourseProgressPage() {
     return "bg-purple-500";
   };
 
+  // 🔹 Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setOpenMenu(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
-    <div className="p-8 border-l-8 border-green-500 bg-white rounded-lg shadow-sm">
+    <div className="p-8 border-l-8 border-orange-400 bg-white rounded-lg shadow-sm">
+      {/* Header */}
       <div className="flex justify-between items-center mb-8">
         <div>
           <h1 className="text-2xl font-light text-gray-900 mb-2">Course Progress</h1>
           <p className="text-gray-600">Track your learning journey across different subjects</p>
         </div>
 
-        <div className="relative">
+        {/* Menu */}
+        <div className="relative" ref={menuRef}>
           <button
             className="p-3 rounded-xl hover:bg-gray-50 transition-colors duration-200"
             onClick={() => setOpenMenu(!openMenu)}
@@ -67,7 +87,7 @@ export default function CourseProgressPage() {
             <MoreVertical className="w-5 h-5 text-gray-400" />
           </button>
           {openMenu && (
-            <div className="absolute right-0 mt-2 w-40 bg-white rounded-xl shadow-lg border border-gray-100 z-50 overflow-hidden">
+            <div className="absolute right-0 mt-2 w-44 bg-white rounded-xl shadow-lg border border-gray-100 z-50 overflow-hidden">
               <button className="flex items-center gap-3 w-full text-left px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors duration-200">
                 <BookOpen className="w-4 h-4" />
                 View All Courses
@@ -77,12 +97,14 @@ export default function CourseProgressPage() {
         </div>
       </div>
 
+      {/* Courses List */}
       <div className="grid grid-cols-1 gap-6">
         {courses.map((course, index) => (
           <div
             key={index}
             className="group p-6 rounded-xl border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all duration-200 bg-white"
           >
+            {/* Title + Category */}
             <div className="flex items-start justify-between mb-4">
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
@@ -91,19 +113,29 @@ export default function CourseProgressPage() {
                     {course.category}
                   </span>
                 </div>
-                <div className="flex items-center gap-4 text-sm text-gray-600">
-                  <span className="flex items-center gap-1">
+                {/* Metadata */}
+                <div className="flex items-center gap-6 text-sm text-gray-700 opacity-90">
+                  <span className="flex items-center gap-2">
                     <Clock className="w-4 h-4" />
                     {course.duration}
                   </span>
-                  <span>Instructor: {course.instructor}</span>
+                  <span className="flex items-center gap-2">
+                    <User className="w-4 h-4" />
+                    {course.instructor}
+                  </span>
                 </div>
               </div>
+              {/* Status */}
+              <span className="flex items-center gap-2 text-xs font-medium text-blue-600 bg-blue-50 border border-blue-200 px-3 py-1 rounded-full">
+                <CheckCircle className="w-4 h-4" />
+                {course.status}
+              </span>
             </div>
 
+            {/* Progress */}
             <div className="space-y-3">
               <div className="flex items-center justify-between text-sm">
-                <span className="text-gray-600">Progress</span>
+                <span className="text-gray-700 opacity-90">Progress</span>
                 <span className="font-medium text-gray-900">{course.progress}% Complete</span>
               </div>
               <div className="w-full bg-gray-100 rounded-full h-3">
@@ -114,8 +146,9 @@ export default function CourseProgressPage() {
               </div>
             </div>
 
+            {/* Footer */}
             <div className="mt-4 pt-4 border-t border-gray-50">
-              <button className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 transition-colors duration-200">
+              <button className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 transition-colors duration-200 font-medium">
                 <Eye className="w-4 h-4" />
                 View Course Details
               </button>
