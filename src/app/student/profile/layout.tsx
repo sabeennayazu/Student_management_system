@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ReactNode, useState, useEffect, useRef } from "react";
 import Notification from "../components/notification/page";
+import Image from "next/image";
 import {
   MoreVertical,
   User,
@@ -66,13 +67,15 @@ export default function ProfileLayout({ children }: { children: ReactNode }) {
           <div className="p-8">
             <div className="flex flex-col lg:flex-row items-center lg:items-start gap-8">
               {/* Avatar */}
-              <div className="relative">
-                <img
-                  src="/avatar.png"
-                  alt="Student Avatar"
-                  className="w-28 h-28 rounded-full object-cover shadow-md ring-2 ring-blue-100"
-                />
-              </div>
+             
+
+<Image
+  src="/dada.png"
+  alt="Sabin Nayaju"
+  width={112} // same as w-28 (28 * 4)
+  height={112}
+  className="rounded-full object-cover border-gray-500 shadow-md ring-2 ring-blue-100"
+/>
 
               {/* Student Info */}
               <div className="flex-1 text-center lg:text-left pt-10">

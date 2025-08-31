@@ -1,155 +1,181 @@
 "use client";
 
 import { useState } from "react";
-import Notification from "../components/notification/page";
+import { format, parseISO, isSameDay, differenceInDays } from "date-fns";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import { Clock, MapPin, CalendarDays, Book, Laptop } from "lucide-react";
 
-export default function ExamsPage() {
-  const previousExams = [
-    { subject: "Physics", date: "2025-05-10", result: "A" },
-    { subject: "Mathematics", date: "2025-05-15", result: "B+" },
-    { subject: "IoT Basics", date: "2025-06-01", result: "A-" },
-  ];
+interface Exam {
+  subject: string;
+  date: string;
+  time: string;
+  description: string;
+  details: string;
+}
 
-  const upcomingExams = [
-    { subject: "Robotics", date: "2025-09-10", time: "10:00 AM", venue: "Hall A" },
-    { subject: "AI Fundamentals", date: "2025-09-15", time: "1:00 PM", venue: "Hall B" },
-  ];
+const exams: Exam[] = [
+  {
+    subject: "Chapter 1: Basics of Electronics",
+    date: "2024-09-10",
+    time: "10:00 AM",
+    description:
+      "This exam covers the fundamental concepts of Electronics, including mechanics, thermodynamics, and electromagnetism.",
+    details:
+      "Duration: 2 hours\nTotal Marks: 100\nSyllabus: Mechanics (10%), Thermodynamics (30%), Electromagnetism (60%).",
+  },
+  {
+    subject: "Chapter 2: Fundamentals of Electronics",
+    date: "2024-09-15",
+    time: "2:00 PM",
+    description: "Covers wave motion, oscillations, and basic optics.",
+    details:
+      "Duration: 1.5 hours\nTotal Marks: 80\nSyllabus: Waves (40%), Optics (60%).",
+  },
+  {
+    subject: "Chapter 3: Electronics",
+    date: new Date().toISOString().split("T")[0], // today's date → ongoing
+    time: "11:00 AM",
+    description:
+      "Focuses on the laws of Electronics.",
+    details:
+      "Duration: 2 hours\nTotal Marks: 90\nSyllabus: Short question(40%), Long Question (40%), MCQ (20%).",
+  },
+  
+];
 
-  const examRoutine = [
-    { date: "2025-09-10", subject: "Robotics", time: "10:00 AM", venue: "Hall A" },
-    { date: "2025-09-15", subject: "AI Fundamentals", time: "1:00 PM", venue: "Hall B" },
-    { date: "2025-09-20", subject: "Electronics", time: "9:00 AM", venue: "Hall C" },
-  ];
+export default function ExamDashboard() {
+  const [expanded, setExpanded] = useState<number | null>(null);
+  const [date, setDate] = useState<Date>(new Date());
+  const [activeTab, setActiveTab] = useState("Ongoing");
 
-  const examDates = examRoutine.map((exam) => exam.date);
-
-  const tileClassName = ({ date, view }: { date: Date; view: string }) => {
-    const dateStr = date.toISOString().split("T")[0];
-    if (examDates.includes(dateStr)) {
-      return "bg-red-500 text-white rounded-md"; // highlight exam dates
+  
+  const filteredExams = exams.filter((exam) => {
+    if (activeTab === "Upcoming") {
+      return parseISO(exam.date) > new Date();
+    } else if (activeTab === "Completed") {
+      return parseISO(exam.date) < new Date() && !isSameDay(parseISO(exam.date), new Date());
+    } else {
+      return isSameDay(parseISO(exam.date), new Date());
     }
-    return "";
-  };
+  });
 
   return (
-    <div className="p-8 space-y-10">
-      {/* Top Row */}
-      <Notification/>
-       {/* Online Exam Card */}
-      <div className="p-4 bg-white border-l-4 border-indigo-500 rounded-lg shadow-md flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <Laptop className="w-5 h-5 text-indigo-600" />
-          <p className="font-medium text-black">Take Online Exam</p>
-        </div>
-        <button className="px-4 py-2 bg-indigo-600 text-white text-sm rounded-lg hover:bg-indigo-700 transition">
-          Start Exam →
-        </button>
-      </div>
-      <div className="grid md:grid-cols-2 gap-6">
-        {/* Previous Exams */}
-        <div className="p-6 bg-white border-l-4 border-emerald-500 rounded-lg shadow-md">
-          <h2 className="text-lg font-bold text-black mb-4">Previous Exams</h2>
-          <ul className="space-y-3 text-black">
-            {previousExams.map((exam, index) => (
-              <li
-                key={index}
-                className="flex justify-between items-center border-b pb-2"
-              >
-                <div>
-                  <p className="font-semibold">{exam.subject}</p>
-                  <p className="text-sm text-gray-600">{exam.date}</p>
-                </div>
-                <span className="text-sm font-medium text-emerald-600">
-                  Result: {exam.result}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </div>
+    <div className="p-8 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+      <h1 className="text-4xl font-bold mb-2 text-gray-900">Exam Dashboard</h1>
+      <p className="text-gray-700 mb-8">
+        Track, prepare, and take your exams with an organized view.
+      </p>
 
-        {/* Upcoming Exams */}
-        <div className="p-6 bg-white border-l-4 border-blue-500 rounded-lg shadow-md">
-          <h2 className="text-lg font-bold text-black mb-4">Upcoming Exams</h2>
-          <ul className="space-y-3 text-black">
-            {upcomingExams.map((exam, index) => (
-              <li
-                key={index}
-                className="flex justify-between items-center border-b pb-2"
-              >
-                <div>
-                  <p className="font-semibold">{exam.subject}</p>
-                  <p className="text-sm text-gray-600">{exam.date}</p>
-                </div>
-                <div className="text-right text-sm text-gray-600">
-                  <p className="flex items-center gap-1">
-                    <Clock className="w-4 h-4" /> {exam.time}
-                  </p>
-                  <p className="flex items-center gap-1">
-                    <MapPin className="w-4 h-4" /> {exam.venue}
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
+      {/* Tabs */}
+      <div className="flex space-x-6 border-b mb-8">
+        {["Ongoing", "Upcoming", "Completed"].map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={`pb-3 px-2 font-medium transition ${
+              activeTab === tab
+                ? "text-blue-600 border-b-2 border-blue-600"
+                : "text-gray-500 hover:text-gray-700"
+            }`}
+          >
+            {tab}
+          </button>
+        ))}
       </div>
 
-      {/* Middle Row */}
-      <div className="grid md:grid-cols-2 gap-6">
-        {/* Exam Calendar */}
-        <div className="p-6 bg-white border-l-4 border-purple-500 rounded-lg shadow-md">
-          <h2 className="text-lg font-bold text-black mb-4">Exam Calendar</h2>
+      {/* Exam Cards */}
+      <div className="space-y-6 max-w-4xl">
+        {filteredExams.length > 0 ? (
+          filteredExams.map((exam, idx) => {
+            const examDate = parseISO(exam.date);
+            const daysRemaining = differenceInDays(examDate, new Date());
+
+            return (
+              <div
+                key={idx}
+                className="bg-white shadow-lg rounded-2xl p-6 border border-gray-200 hover:shadow-xl transition"
+              >
+                <div className="flex justify-between items-center">
+                  <h2 className="text-2xl font-semibold text-gray-900">
+                    {exam.subject}
+                  </h2>
+                  <span className="text-sm px-3 py-1 rounded-full bg-blue-100 text-blue-700">
+                    {activeTab}
+                  </span>
+                </div>
+
+                <p className="text-gray-700 mt-3">{exam.description}</p>
+
+                <div className="flex items-center space-x-4 mt-6">
+                  {activeTab === "Ongoing" && (
+                    <button className="px-5 py-2 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition">
+                      Start Exam
+                    </button>
+                  )}
+
+                  {activeTab === "Upcoming" && (
+                    <button
+                      disabled
+                      className="px-5 py-2 rounded-lg bg-gray-300 text-gray-600 font-medium cursor-not-allowed"
+                    >
+                      {daysRemaining} days remaining
+                    </button>
+                  )}
+
+                  {activeTab === "Completed" && (
+                    <button
+                      disabled
+                      className="px-5 py-2 rounded-lg bg-green-100 text-green-700 font-medium cursor-not-allowed"
+                    >
+                      Completed
+                    </button>
+                  )}
+
+                  <button
+                    onClick={() => setExpanded(expanded === idx ? null : idx)}
+                    className="px-5 py-2 rounded-lg bg-gray-100 text-gray-800 hover:bg-gray-200 transition"
+                  >
+                    {expanded === idx ? "Hide Details" : "View Details"}
+                  </button>
+                </div>
+
+                {/* Expandable details */}
+                {expanded === idx && (
+                  <div className="mt-5 border-t pt-4 text-gray-800 whitespace-pre-line">
+                    <p>
+                      <strong>Date:</strong> {format(examDate, "PPP")} at {exam.time}
+                    </p>
+                    <p className="mt-3">{exam.details}</p>
+                  </div>
+                )}
+              </div>
+            );
+          })
+        ) : (
+          <p className="text-gray-600 italic">
+            No exams found in this category.
+          </p>
+        )}
+      </div>
+
+      {/* Calendar */}
+      <div className="mt-12 max-w-md">
+        <h2 className="text-lg font-semibold mb-3 text-gray-900">
+          Exam Calendar
+        </h2>
+        <div className="border rounded-2xl p-4 shadow-sm bg-white">
           <Calendar
-            className="rounded-lg border w-full text-black"
-            tileClassName={tileClassName}
-            prev2Label={null}
-            next2Label={null}
+            onChange={setDate}
+            value={date}
+            className="rounded-lg w-full text-black"
+            tileClassName={({ date }) => {
+              return exams.some((exam) => isSameDay(parseISO(exam.date), date))
+                ? "bg-blue-500 text-white rounded-full"
+                : "";
+            }}
           />
-          <style jsx global>{`
-            .react-calendar__tile {
-              color: rgba(0, 0, 0, 0.85); /* default text */
-            }
-            .react-calendar__month-view__days__day--neighboringMonth {
-              color: rgba(0, 0, 0, 0.4); /* faded for other months */
-            }
-            .react-calendar__navigation button {
-              color: rgba(0, 0, 0, 0.9);
-              font-weight: 500;
-            }
-          `}</style>
-        </div>
-
-        {/* Exam Routine */}
-        <div className="p-6 bg-white border-l-4 border-rose-500 rounded-lg shadow-md">
-          <h2 className="text-lg font-bold text-black mb-4">Exam Routine</h2>
-          <ul className="space-y-4 text-black">
-            {examRoutine.map((exam, index) => (
-              <li
-                key={index}
-                className="p-3 rounded-lg border hover:shadow-md transition bg-gray-50"
-              >
-                <p className="flex items-center gap-2 font-semibold">
-                  <Book className="w-4 h-4 text-blue-600" /> {exam.subject}
-                </p>
-                <p className="flex items-center gap-2 text-sm text-gray-800">
-                  <CalendarDays className="w-4 h-4" /> {exam.date}
-                </p>
-                <p className="flex items-center gap-2 text-sm text-gray-800">
-                  <Clock className="w-4 h-4" /> {exam.time}
-                </p>
-                <p className="flex items-center gap-2 text-sm text-gray-800">
-                  <MapPin className="w-4 h-4" /> {exam.venue}
-                </p>
-              </li>
-            ))}
-          </ul>
         </div>
       </div>
-
-     
     </div>
   );
 }

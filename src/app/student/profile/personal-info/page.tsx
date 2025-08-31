@@ -16,7 +16,7 @@ export default function PersonalInfoPage() {
   };
 
   return (
-    <div className="p-8 border-l-8 border-blue-500 bg-white rounded-lg shadow-sm ">
+    <div className="p-8 border-l-6 border-blue-500 bg-white rounded-lg shadow-sm ">
       <h1 className="text-2xl font-bold text-black mb-6">Personal Information</h1>
 
       {/* Info List (Vertical, Left Aligned) */}
