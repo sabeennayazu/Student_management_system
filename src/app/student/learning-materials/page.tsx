@@ -24,10 +24,11 @@ export default function LearningMaterialsPage() {
   ];
 
   return (
+    <div className="p-8 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
     <div className="p-8 space-y-8">
       {/* Page Header */}
       <div>
-        <h1 className="text-2xl font-light text-gray-900 mb-2">Learning Materials</h1>
+        <h1 className="text-2xl font-light text-gray-900 mb-2"><strong>Learning Materials</strong></h1>
         <p className="text-gray-600">Find your reading and video materials by unit and chapter.</p>
       </div>
 
@@ -96,6 +97,7 @@ export default function LearningMaterialsPage() {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

@@ -29,8 +29,8 @@ const links = [
 ];
 
 const settingsItems = [
-  { name: "Settings & Privacy", href: "/student/settings-privacy", icon: Settings },
-  { name: "Help & Support", href: "/student/help-support", icon: HelpCircle },
+  { name: "Settings & Privacy", href: "/student/components/settings", icon: Settings },
+  { name: "Help & Support", href: "/student/components/help&support", icon: HelpCircle },
   { name: "Profile", href: "/student/profile", icon: User },
   { name: "Logout", href: "/logout", icon: LogOut },
 ];
@@ -41,6 +41,7 @@ export default function StudentLayout({ children }: { children: ReactNode }) {
   const [settingsOpen, setSettingsOpen] = useState(false);
 
   return (
+    
     <div className="flex">
       {/* Sidebar */}
       <aside

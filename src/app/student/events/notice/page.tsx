@@ -2,6 +2,7 @@
 
 export default function RoboticsNoticePage() {
   return (
+    <div className="p-8 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
     <div className="p-8 max-w-3xl mx-auto bg-white rounded-lg shadow-sm border">
       {/* Heading */}
       <h1 className="text-3xl font-bold text-center text-black underline mb-6">
@@ -61,6 +62,7 @@ export default function RoboticsNoticePage() {
         <p className="font-semibold">Event Coordinator</p>
         <p>Robotics Club</p>
       </div>
+    </div>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation"; // ✅ Import router
 import { motion, AnimatePresence } from "framer-motion";
 import { Bell, Trophy, Bot, Brain, MoreVertical } from "lucide-react";
 
@@ -32,6 +33,7 @@ export default function Notification() {
 
   const [menuOpen, setMenuOpen] = useState<number | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const router = useRouter(); // ✅ Initialize router
 
   // Close dropdowns if clicked outside
   useEffect(() => {
@@ -51,9 +53,7 @@ export default function Notification() {
   // Toggle read/unread
   const toggleRead = (index: number) => {
     setNotifications((prev) =>
-      prev.map((n, i) =>
-        i === index ? { ...n, read: !n.read } : n
-      )
+      prev.map((n, i) => (i === index ? { ...n, read: !n.read } : n))
     );
     setMenuOpen(null);
   };
@@ -164,7 +164,10 @@ export default function Notification() {
 
             {/* Footer */}
             <div className="p-3 text-center bg-gray-50">
-              <button className="text-xs font-medium text-blue-600 hover:underline">
+              <button
+                onClick={() => router.push("/student/notifications")} // ✅ Navigate
+                className="text-xs font-medium text-blue-600 hover:underline"
+              >
                 View All Notifications
               </button>
             </div>
