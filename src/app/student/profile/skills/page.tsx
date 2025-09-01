@@ -36,7 +36,7 @@ export default function SkillsPage() {
   ];
 
   return (
-    <div className="p-8 border-l-8 border-purple-500 bg-white rounded-lg shadow-sm">
+    <div className="p-8  bg-white rounded-lg shadow-sm">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-2xl font-bold text-black">Skills & Expertise</h1>
 

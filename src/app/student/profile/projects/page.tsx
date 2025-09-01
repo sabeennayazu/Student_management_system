@@ -103,7 +103,7 @@ export default function ProjectsPage() {
   };
 
   return (
-    <div className="p-8 border-l-8 border-red-500 bg-white rounded-lg shadow-sm">
+    <div className="p-8  bg-white rounded-lg shadow-sm">
       <div className="flex justify-between items-center mb-8">
         <div>
           <h1 className="text-2xl font-light text-gray-900 mb-2">
@@ -138,11 +138,11 @@ export default function ProjectsPage() {
       </div>
 
       {/* Project Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ">
         {projects.map((project, index) => (
           <div
             key={index}
-            className="group p-6 rounded-xl border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all duration-200 bg-white"
+            className="group p-6 rounded-xl border border-gray-300 shadow-sm hover:border-gray-200 hover:shadow-md transition-all duration-200 bg-white"
           >
             <div className="flex items-start justify-between mb-4">
               <div className="flex-1">

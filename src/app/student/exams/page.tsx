@@ -35,25 +35,25 @@ const exams: Exam[] = [
     subject: "Chapter 3: Electronics",
     date: new Date().toISOString().split("T")[0], // today's date → ongoing
     time: "11:00 AM",
-    description:
-      "Focuses on the laws of Electronics.",
+    description: "Focuses on the laws of Electronics.",
     details:
       "Duration: 2 hours\nTotal Marks: 90\nSyllabus: Short question(40%), Long Question (40%), MCQ (20%).",
   },
-  
 ];
 
 export default function ExamDashboard() {
   const [expanded, setExpanded] = useState<number | null>(null);
-  const [date, setDate] = useState<Date>(new Date());
+  const [date, setDate] = useState<Date | null>(new Date());
   const [activeTab, setActiveTab] = useState("Ongoing");
 
-  
   const filteredExams = exams.filter((exam) => {
     if (activeTab === "Upcoming") {
       return parseISO(exam.date) > new Date();
     } else if (activeTab === "Completed") {
-      return parseISO(exam.date) < new Date() && !isSameDay(parseISO(exam.date), new Date());
+      return (
+        parseISO(exam.date) < new Date() &&
+        !isSameDay(parseISO(exam.date), new Date())
+      );
     } else {
       return isSameDay(parseISO(exam.date), new Date());
     }
@@ -143,7 +143,8 @@ export default function ExamDashboard() {
                 {expanded === idx && (
                   <div className="mt-5 border-t pt-4 text-gray-800 whitespace-pre-line">
                     <p>
-                      <strong>Date:</strong> {format(examDate, "PPP")} at {exam.time}
+                      <strong>Date:</strong> {format(examDate, "PPP")} at{" "}
+                      {exam.time}
                     </p>
                     <p className="mt-3">{exam.details}</p>
                   </div>
@@ -165,7 +166,11 @@ export default function ExamDashboard() {
         </h2>
         <div className="border rounded-2xl p-4 shadow-sm bg-white">
           <Calendar
-            onChange={setDate}
+            onChange={(value) => {
+              if (value instanceof Date) {
+                setDate(value);
+              }
+            }}
             value={date}
             className="rounded-lg w-full text-black"
             tileClassName={({ date }) => {

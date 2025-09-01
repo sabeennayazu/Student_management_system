@@ -83,7 +83,7 @@ export default function AssessmentsPage() {
   const averageScore = Math.round(assessments.reduce((sum, a) => sum + a.score, 0) / assessments.length);
 
   return (
-    <div className="p-8 border-l-8 border-green-500 bg-white rounded-lg shadow-sm">
+    <div className="p-8 border-gray-500 bg-white rounded-lg shadow-md">
       <div className="flex justify-between items-center mb-8">
         <div>
           <h1 className="text-2xl font-light text-gray-900 mb-2">Academic Assessments</h1>
@@ -113,8 +113,8 @@ export default function AssessmentsPage() {
       </div>
 
       {/* Summary Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="p-6 rounded-xl border border-gray-100 bg-white">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 ">
+        <div className="p-6 rounded-xl border border-gray-300 shadow-md bg-white">
           <div className="flex items-center gap-3 mb-2">
             <div className="p-2 rounded-lg bg-indigo-50">
               <Award className="w-5 h-5 text-indigo-600" />
@@ -124,7 +124,7 @@ export default function AssessmentsPage() {
           <p className="text-2xl font-semibold text-gray-900">{averageScore}%</p>
         </div>
 
-        <div className="p-6 rounded-xl border border-gray-100 bg-white">
+        <div className="p-6 rounded-xl border border-gray-300 shadow-md bg-white">
           <div className="flex items-center gap-3 mb-2">
             <div className="p-2 rounded-lg bg-indigo-50">
               <FileText className="w-5 h-5 text-indigo-600" />
@@ -140,7 +140,7 @@ export default function AssessmentsPage() {
         {assessments.map((assessment, index) => (
           <div
             key={index}
-            className="group p-6 rounded-xl border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all duration-200 bg-white"
+            className="group p-6 rounded-xl border border-gray-300 shadow-sm hover:border-gray-200 hover:shadow-md transition-all duration-200 bg-white"
           >
             <div className="flex items-start justify-between mb-4">
               <div className="flex-1">

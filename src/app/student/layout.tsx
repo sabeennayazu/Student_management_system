@@ -15,7 +15,7 @@ import {
   Settings,
   HelpCircle,
   Users,
-  LogOut
+  LogOut,
 } from "lucide-react";
 
 // ✅ Define links BEFORE using them
@@ -24,7 +24,7 @@ const links = [
   { name: "Tasks", href: "/student/tasks", icon: ClipboardList },
   { name: "Exams", href: "/student/exams", icon: GraduationCap },
   { name: "Projects", href: "/student/projects", icon: FolderKanban },
-  { name: "Routine", href: "/student/routine", icon: CalendarDays },
+  { name: "Results", href: "/student/results", icon: CalendarDays }, // 🔄 Changed here
   { name: "Events", href: "/student/events", icon: Users },
 ];
 
@@ -74,16 +74,15 @@ export default function StudentLayout({ children }: { children: ReactNode }) {
         {/* Settings Dropdown */}
         <div className="relative mt-4">
           <button
-  className="w-full flex justify-between items-center px-3 py-2 rounded-lg text-gray-700 hover:bg-blue-100 hover:text-blue-700 font-medium transition-colors"
-  onClick={() => setSettingsOpen(!settingsOpen)}
->
-  <div className="flex items-center gap-3">
-    <Settings className="w-5 h-5" />
-    Settings
-  </div>
-  <ChevronDown className={`w-5 h-5 transition-transform ${settingsOpen ? "rotate-180" : ""}`} />
-</button>
-
+            className="w-full flex justify-between items-center px-3 py-2 rounded-lg text-gray-700 hover:bg-blue-100 hover:text-blue-700 font-medium transition-colors"
+            onClick={() => setSettingsOpen(!settingsOpen)}
+          >
+            <div className="flex items-center gap-3">
+              <Settings className="w-5 h-5" />
+              Settings
+            </div>
+            <ChevronDown className={`w-5 h-5 transition-transform ${settingsOpen ? "rotate-180" : ""}`} />
+          </button>
 
           {settingsOpen && (
             <div className="absolute bottom-full mb-2 w-full flex flex-col gap-1 bg-white rounded-lg shadow-md border border-blue-100">

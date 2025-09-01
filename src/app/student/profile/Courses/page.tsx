@@ -70,7 +70,7 @@ export default function CourseProgressPage() {
   }, []);
 
   return (
-    <div className="p-8 border-l-8 border-orange-400 bg-white rounded-lg shadow-sm">
+    <div className="p-8  bg-white rounded-lg shadow-sm">
       {/* Header */}
       <div className="flex justify-between items-center mb-8">
         <div>
@@ -102,7 +102,7 @@ export default function CourseProgressPage() {
         {courses.map((course, index) => (
           <div
             key={index}
-            className="group p-6 rounded-xl border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all duration-200 bg-white"
+            className="group p-6 rounded-xl border border-gray-300 shadow-sm hover:border-gray-300 hover:shadow-md transition-all duration-200 bg-white"
           >
             {/* Title + Category */}
             <div className="flex items-start justify-between mb-4">

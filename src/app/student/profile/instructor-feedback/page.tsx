@@ -46,7 +46,7 @@ export default function FeedbackPage() {
   ];
 
   return (
-    <div className="p-8 border-l-8 border-black bg-white rounded-lg shadow-sm">
+    <div className="p-8  bg-white rounded-lg shadow-sm">
       <div className="flex justify-between items-center mb-8">
         <div>
           <h1 className="text-2xl font-light text-gray-900 mb-2">Instructor Feedback</h1>
@@ -76,7 +76,7 @@ export default function FeedbackPage() {
         {feedbacks.map((feedback, index) => (
           <div
             key={index}
-            className="group p-6 rounded-xl border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all duration-200 bg-white"
+            className="group p-6 rounded-xl border border-gray-200 shadow-sm hover:border-gray-300 hover:shadow-md transition-all duration-200 bg-white"
           >
             <div className="flex items-start gap-4">
               <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center text-gray-700 font-semibold text-sm">
