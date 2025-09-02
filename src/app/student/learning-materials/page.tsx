@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { BookOpen, Video, ChevronDown, ChevronUp, FileText } from "lucide-react";
+import Notification from "../components/notification/page";
 
 export default function LearningMaterialsPage() {
   const [openChapter, setOpenChapter] = useState<number | null>(null);
@@ -25,6 +26,7 @@ export default function LearningMaterialsPage() {
 
   return (
     <div className="p-8 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+      <Notification />
     <div className="p-8 space-y-8">
       {/* Page Header */}
       <div>
@@ -34,7 +36,7 @@ export default function LearningMaterialsPage() {
 
       <div className="grid md:grid-cols-2 gap-6">
         {/* Books Section */}
-        <div className="bg-white shadow rounded-xl p-6">
+        <div className="bg-white shadow-md rounded-xl p-6">
           <div className="flex items-center gap-2 mb-4">
             <BookOpen className="w-5 h-5 text-gray-700" />
             <h2 className="text-lg font-semibold text-gray-900">Books</h2>
@@ -73,7 +75,7 @@ export default function LearningMaterialsPage() {
         </div>
 
         {/* Videos Section */}
-        <div className="bg-white shadow rounded-xl p-6">
+        <div className="bg-white shadow-md rounded-xl p-6">
           <div className="flex items-center gap-2 mb-4">
             <Video className="w-5 h-5 text-gray-700" />
             <h2 className="text-lg font-semibold text-gray-900">Videos</h2>

@@ -1,11 +1,13 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { MoreVertical, FileText, Calendar, Award, BarChart3, Plus } from "lucide-react";
 
 export default function AssessmentsPage() {
   const [openMenu, setOpenMenu] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -180,7 +182,7 @@ export default function AssessmentsPage() {
       </div>
 
       <div className="mt-8 pt-6 border-t border-gray-100">
-        <button className="px-6 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-colors duration-200 font-medium">
+        <button onClick={() => router.push("/student/tasks")} className="px-6 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-colors duration-200 font-medium">
           View Full Report
         </button>
       </div>

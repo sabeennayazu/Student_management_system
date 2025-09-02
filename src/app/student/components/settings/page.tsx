@@ -1,11 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Switch } from "@/components/ui/switch";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Notification from "../notification/page";
 
 export default function SettingsPage() {
   const [darkMode, setDarkMode] = useState(false);
@@ -14,81 +10,88 @@ export default function SettingsPage() {
   const [smsNotif, setSmsNotif] = useState(false);
   const [pushNotif, setPushNotif] = useState(true);
   const [language, setLanguage] = useState("English");
+  const [activeTab, setActiveTab] = useState<"account" | "preferences">("account");
 
   return (
     <div className="p-8 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
-    <div className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6">Settings</h1>
+      <Notification />
+      <div className="p-6 max-w-4xl mx-auto">
+        <h1 className="text-2xl font-bold mb-6">Settings</h1>
 
-      <Tabs defaultValue="account" className="w-full">
-        <TabsList className="grid grid-cols-2 gap-2">
-          <TabsTrigger value="account">Login & Security</TabsTrigger>
-          <TabsTrigger value="preferences">Preferences</TabsTrigger>
-        </TabsList>
+        {/* Tabs */}
+        <div className="flex w-full space-x-6 justify-left border-b mb-6">
+          {["account", "preferences"].map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab as "account" | "preferences")}
+              className={`pb-3 px-2 font-medium transition ${
+                activeTab === tab
+                  ? "text-blue-600 border-b-2 border-blue-600"
+                  : "text-gray-500 hover:text-gray-700"
+              }`}
+            >
+              {tab === "account" ? "Login & Security" : "Preferences"}
+            </button>
+          ))}
+        </div>
 
         {/* Login & Security */}
-        <TabsContent value="account" className="space-y-4 mt-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Password Management</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <h3 className="font-semibold">Change Password</h3>
-              <Input type="password" placeholder="Enter Old Password" />
-              <Input type="password" placeholder="New Password" />
-              <Input type="password" placeholder="Confirm New Password" />
-              <Button className="bg-blue-500">Update Password</Button>
+        {activeTab === "account" && (
+          <div className="space-y-6">
+            <div className="bg-white p-6 rounded-xl shadow">
+              <h2 className="text-lg font-semibold mb-4">Password Management</h2>
+              <div className="space-y-3">
+                <h3 className="font-medium">Change Password</h3>
+                <input type="password" placeholder="Enter Old Password" className="w-full border rounded-lg px-3 py-2" />
+                <input type="password" placeholder="New Password" className="w-full border rounded-lg px-3 py-2" />
+                <input type="password" placeholder="Confirm New Password" className="w-full border rounded-lg px-3 py-2" />
+                <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">Update Password</button>
 
-              <h3 className="font-semibold mt-6">Recover Password</h3>
-              <p className="text-sm text-gray-600">
-                If you forget your password, you can recover it using your registered email or phone number.
-              </p>
-              <Input type="email" placeholder="Recovery Email" defaultValue="sabin@example.com" />
-              <Input type="tel" placeholder="Recovery Phone Number" defaultValue="+977 9800000000" />
-              <Button className="bg-blue-500">Send Recovery Link / OTP</Button>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Two-Factor Authentication</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <div className="flex items-center justify-between">
-                <span>Enable 2FA</span>
-                <Switch checked={twoFactor} onCheckedChange={setTwoFactor} 
- 
-  className="data-[state=checked]:bg-blue-500"
-/> 
+                <h3 className="font-medium mt-6">Recover Password</h3>
+                <p className="text-sm text-gray-600">
+                  If you forget your password, you can recover it using your registered email or phone number.
+                </p>
+                <input type="email" placeholder="Recovery Email" defaultValue="sabin@example.com" className="w-full border rounded-lg px-3 py-2" />
+                <input type="tel" placeholder="Recovery Phone Number" defaultValue="+977 9800000000" className="w-full border rounded-lg px-3 py-2" />
+                <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">Send Recovery Link / OTP</button>
               </div>
-              <p className="text-sm text-gray-600">
-                Two-factor authentication (2FA) adds an extra layer of security to your
-                account. After entering your password, you will also need to enter a code
-                sent to your recovery email or phone number. This helps protect your account even if your
-                password is stolen.
+            </div>
+
+            <div className="bg-white p-6 rounded-xl shadow">
+              <h2 className="text-lg font-semibold mb-4">Two-Factor Authentication</h2>
+              <div className="flex items-center justify-between mb-3">
+                <span>Enable 2FA</span>
+                <input
+                  type="checkbox"
+                  checked={twoFactor}
+                  onChange={(e) => setTwoFactor(e.target.checked)}
+                  className="w-5 h-5 accent-blue-500"
+                />
+              </div>
+              <p className="text-sm text-gray-600 mb-3">
+                Two-factor authentication (2FA) adds an extra layer of security to your account. After entering your
+                password, you will also need to enter a code sent to your recovery email or phone number.
               </p>
-              <Button className="bg-blue-500">Send OTP to Recovery Contact</Button>
-            </CardContent>
-          </Card>
-        </TabsContent>
+              <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">Send OTP to Recovery Contact</button>
+            </div>
+          </div>
+        )}
 
         {/* Preferences */}
-        <TabsContent value="preferences" className="space-y-4 mt-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Appearance</CardTitle>
-            </CardHeader>
-            <CardContent className="flex items-center justify-between">
-              <span>Dark Mode</span>
-              <Switch checked={darkMode} onCheckedChange={setDarkMode} className="data-[state=checked]:bg-blue-500"/>
-            </CardContent>
-          </Card>
+        {activeTab === "preferences" && (
+          <div className="space-y-6">
+            <div className="bg-white p-6 rounded-xl shadow flex items-center justify-between">
+              <h2 className="text-lg font-semibold">Dark Mode</h2>
+              <input
+                type="checkbox"
+                checked={darkMode}
+                onChange={(e) => setDarkMode(e.target.checked)}
+                className="w-5 h-5 accent-blue-500"
+              />
+            </div>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Language</CardTitle>
-            </CardHeader>
-            <CardContent>
+            <div className="bg-white p-6 rounded-xl shadow">
+              <h2 className="text-lg font-semibold mb-3">Language</h2>
               <select
                 value={language}
                 onChange={(e) => setLanguage(e.target.value)}
@@ -97,65 +100,66 @@ export default function SettingsPage() {
                 <option value="English">English</option>
                 <option value="Nepali">Nepali</option>
               </select>
-            </CardContent>
-          </Card>
+            </div>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Notifications</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
+            <div className="bg-white p-6 rounded-xl shadow space-y-3">
+              <h2 className="text-lg font-semibold">Notifications</h2>
               <div className="flex items-center justify-between">
                 <span>Email Alerts (exams, projects, results)</span>
-                <Switch checked={emailNotif} onCheckedChange={setEmailNotif} className="data-[state=checked]:bg-blue-500"/>
+                <input
+                  type="checkbox"
+                  checked={emailNotif}
+                  onChange={(e) => setEmailNotif(e.target.checked)}
+                  className="w-5 h-5 accent-blue-500"
+                />
               </div>
               <div className="flex items-center justify-between">
                 <span>SMS Alerts (important announcements)</span>
-                <Switch checked={smsNotif} onCheckedChange={setSmsNotif} className="data-[state=checked]:bg-blue-500"/>
+                <input
+                  type="checkbox"
+                  checked={smsNotif}
+                  onChange={(e) => setSmsNotif(e.target.checked)}
+                  className="w-5 h-5 accent-blue-500"
+                />
               </div>
               <div className="flex items-center justify-between">
                 <span>In-app Push Notifications</span>
-                <Switch checked={pushNotif} onCheckedChange={setPushNotif} className="data-[state=checked]:bg-blue-500"/>
+                <input
+                  type="checkbox"
+                  checked={pushNotif}
+                  onChange={(e) => setPushNotif(e.target.checked)}
+                  className="w-5 h-5 accent-blue-500"
+                />
               </div>
-            </CardContent>
-          </Card>
+            </div>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Dashboard Customization</CardTitle>
-            </CardHeader>
-            <CardContent>
+            <div className="bg-white p-6 rounded-xl shadow">
+              <h2 className="text-lg font-semibold mb-3">Dashboard Customization</h2>
               <select className="w-64 border rounded-lg px-3 py-2">
                 <option value="exams">Exams</option>
                 <option value="projects">Projects</option>
                 <option value="attendance">Attendance</option>
               </select>
-            </CardContent>
-          </Card>
+            </div>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Calendar Preferences</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
+            <div className="bg-white p-6 rounded-xl shadow space-y-3">
+              <h2 className="text-lg font-semibold">Calendar Preferences</h2>
               <div className="flex items-center justify-between">
                 <span>Show Holidays</span>
-                <Switch defaultChecked className="data-[state=checked]:bg-blue-500"/>
+                <input type="checkbox" defaultChecked className="w-5 h-5 accent-blue-500" />
               </div>
               <div className="flex items-center justify-between">
                 <span>Show Exam Schedules</span>
-                <Switch defaultChecked className="data-[state=checked]:bg-blue-500" />
+                <input type="checkbox" defaultChecked className="w-5 h-5 accent-blue-500" />
               </div>
               <div className="flex items-center justify-between">
                 <span>Enable Reminders</span>
-                <Switch className="data-[state=checked]:bg-blue-500"/>
+                <input type="checkbox" className="w-5 h-5 accent-blue-500" />
               </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
-    </div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
-

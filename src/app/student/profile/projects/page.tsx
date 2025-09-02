@@ -40,7 +40,6 @@ export default function ProjectsPage() {
       status: "Completed",
       description: "Arduino-based traffic light control system",
       dueDate: "2025-07-15",
-      progress: 100,
       team: ["John", "Alice"],
     },
     {
@@ -48,7 +47,6 @@ export default function ProjectsPage() {
       status: "In Progress",
       description: "Autonomous robot using sensors and motors",
       dueDate: "2025-09-30",
-      progress: 65,
       team: ["John", "Bob", "Carol"],
     },
     {
@@ -56,15 +54,13 @@ export default function ProjectsPage() {
       status: "Pending",
       description: "Sound level measurement device",
       dueDate: "2025-10-15",
-      progress: 20,
       team: ["John"],
     },
     {
       title: "Smart Home Automation",
-      status: "Planned",
+      status: "Pending",
       description: "IoT-based home control system",
       dueDate: "2025-11-30",
-      progress: 5,
       team: ["John", "David"],
     },
   ];
@@ -93,13 +89,6 @@ export default function ProjectsPage() {
       default:
         return <Circle className="w-4 h-4" />;
     }
-  };
-
-  const getProgressColor = (progress: number) => {
-    if (progress >= 80) return "bg-emerald-500";
-    if (progress >= 50) return "bg-blue-500";
-    if (progress >= 20) return "bg-orange-500";
-    return "bg-purple-500";
   };
 
   return (
@@ -149,7 +138,9 @@ export default function ProjectsPage() {
                 <h3 className="font-semibold text-gray-900 mb-2">
                   {project.title}
                 </h3>
-                <p className="text-sm text-gray-600 mb-3">{project.description}</p>
+                <p className="text-sm text-gray-600 mb-3">
+                  {project.description}
+                </p>
               </div>
               <span
                 className={`flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(
@@ -161,32 +152,15 @@ export default function ProjectsPage() {
               </span>
             </div>
 
-            <div className="space-y-3">
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-gray-600">Progress</span>
-                <span className="font-medium text-gray-900">
-                  {project.progress}%
-                </span>
+            <div className="flex items-center justify-between pt-2">
+              <div className="flex items-center gap-2 text-sm text-gray-600">
+                <Calendar className="w-4 h-4" />
+                {project.dueDate}
               </div>
-              <div className="w-full bg-gray-100 rounded-full h-2">
-                <div
-                  className={`h-2 rounded-full transition-all duration-300 ${getProgressColor(
-                    project.progress
-                  )}`}
-                  style={{ width: `${project.progress}%` }}
-                ></div>
-              </div>
-
-              <div className="flex items-center justify-between pt-2">
-                <div className="flex items-center gap-2 text-sm text-gray-600">
-                  <Calendar className="w-4 h-4" />
-                  {project.dueDate}
-                </div>
-                <div className="flex items-center gap-2 text-sm text-gray-600">
-                  <User className="w-4 h-4" />
-                  {project.team.length} member
-                  {project.team.length > 1 ? "s" : ""}
-                </div>
+              <div className="flex items-center gap-2 text-sm text-gray-600">
+                <User className="w-4 h-4" />
+                {project.team.length} member
+                {project.team.length > 1 ? "s" : ""}
               </div>
             </div>
 

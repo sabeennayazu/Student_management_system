@@ -4,6 +4,7 @@ import { useState } from "react";
 import { format, parseISO, isSameDay, differenceInDays } from "date-fns";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import Notification from "../components/notification/page";
 
 interface Exam {
   subject: string;
@@ -61,6 +62,7 @@ export default function ExamDashboard() {
 
   return (
     <div className="p-8 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+      <Notification />
       <h1 className="text-4xl font-bold mb-2 text-gray-900">Exam Dashboard</h1>
       <p className="text-gray-700 mb-8">
         Track, prepare, and take your exams with an organized view.

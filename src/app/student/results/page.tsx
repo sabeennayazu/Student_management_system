@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { format, parseISO, compareAsc } from "date-fns";
 import { CheckCircle, XCircle } from "lucide-react";
+import Notification from "../components/notification/page";
 import {
   LineChart,
   Line,
@@ -72,6 +73,7 @@ const resultsData = sortedResults.map((res) => ({
 
   return (
     <div className="p-8 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+      <Notification />
       <h1 className="text-4xl font-bold mb-2 text-gray-900">Results</h1>
       <p className="text-gray-700 mb-8">
         View your online exam results and performance feedback.

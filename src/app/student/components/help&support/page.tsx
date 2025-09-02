@@ -6,12 +6,15 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Notification from "../notification/page";
 
 export default function HelpSupportPage() {
   const [feedback, setFeedback] = useState("");
 
   return (
         <div className="p-8 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+          <Notification />
+
       <h1 className="text-2xl font-bold mb-6">Help & Support</h1>
 
       <Tabs defaultValue="faq" className="w-full">
