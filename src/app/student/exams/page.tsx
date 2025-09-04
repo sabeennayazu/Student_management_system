@@ -76,8 +76,8 @@ export default function ExamDashboard() {
             onClick={() => setActiveTab(tab)}
             className={`pb-3 px-2 font-medium transition ${
               activeTab === tab
-                ? "text-blue-600 border-b-2 border-blue-600"
-                : "text-gray-500 hover:text-gray-700"
+                ? "text-blue-600 border-b-2 border-blue-600 hover:cursor-pointer"
+                : "text-gray-500 hover:text-gray-700 cursor-pointer"
             }`}
           >
             {tab}
@@ -161,28 +161,34 @@ export default function ExamDashboard() {
         )}
       </div>
 
-      {/* Calendar */}
-      <div className="mt-12 max-w-md">
-        <h2 className="text-lg font-semibold mb-3 text-gray-900">
-          Exam Calendar
-        </h2>
-        <div className="border rounded-2xl p-4 shadow-sm bg-white">
-          <Calendar
-            onChange={(value) => {
-              if (value instanceof Date) {
-                setDate(value);
-              }
-            }}
-            value={date}
-            className="rounded-lg w-full text-black"
-            tileClassName={({ date }) => {
-              return exams.some((exam) => isSameDay(parseISO(exam.date), date))
-                ? "bg-blue-500 text-white rounded-full"
-                : "";
-            }}
-          />
+      <Calendar
+  onChange={(value) => {
+    if (value instanceof Date) {
+      setDate(value);
+    }
+  }}
+  value={date}
+  className="rounded-lg w-full text-black"
+  tileClassName={({ date }) => {
+    if (exams.some((exam) => isSameDay(parseISO(exam.date), date))) {
+      return "relative text-blue-600 font-semibold"; // text styling
+    }
+    return "";
+  }}
+  tileContent={({ date }) => {
+    if (exams.some((exam) => isSameDay(parseISO(exam.date), date))) {
+      return (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="w-8 h-8 rounded-full border-2 border-dotted border-blue-500 flex items-center justify-center">
+            {date.getDate()}
+          </div>
         </div>
-      </div>
+      );
+    }
+    return null;
+  }}
+/>
+
     </div>
   );
 }

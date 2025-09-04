@@ -5,6 +5,12 @@ import 'chart.js/auto';
 import Notification from "./components/notification/page";
 
 // Custom Circular Progress Component
+const links = [
+ 
+  { name: "Tasks", href: "/student/tasks"  },
+  { name: "Exams", href: "/student/exams",  },
+  { name: "Projects", href: "/student/projects" },
+];
 const CircularProgress = ({ value, color, unit }: { value: number; color: string; unit: string }) => {
   const radius = 40;
   const strokeWidth = 6;
@@ -120,7 +126,7 @@ export default function DashboardPage() {
         {/* Stats */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((stat) => (
-            <div key={stat.label} className="bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 rounded-2xl p-6 flex flex-col items-center h-44 justify-center border border-white/20">
+            <div key={stat.label} href={link.href} className="bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 rounded-2xl cursor-pointer p-6 flex flex-col items-center h-44 justify-center border border-white/20">
               <h3 className="text-lg font-semibold mb-3 text-gray-700">{stat.label}</h3>
               {"color" in stat ? (
                 <CircularProgress value={Number(stat.value)} color={stat.color ?? "#000"} unit={stat.unit ?? ""} />
@@ -135,7 +141,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Attendance Overview */}
-        <div className="bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 rounded-2xl p-8 border border-white/20">
+        <div className="bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer rounded-2xl p-8 border border-white/20">
           <h3 className="text-xl font-semibold mb-6 text-gray-800">Attendance Overview</h3>
           <div className="flex flex-col md:flex-row items-center gap-8">
             <div className="w-48 h-48 relative">
@@ -183,7 +189,7 @@ export default function DashboardPage() {
               <div className="text-2xl font-bold text-gray-800 mt-1">{nextClass.subject}</div>
               <div className="text-gray-500 mt-1">{nextClass.time}</div>
             </div>
-            <CalendarDays className="w-12 h-12 text-blue-500" />
+            <CalendarDays className="w-12 h-12 text-blue-500 hover:cursor-pointer" />
           </div>
         </div>
       </div>

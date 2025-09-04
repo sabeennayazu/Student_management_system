@@ -19,10 +19,10 @@ export default function HelpSupportPage() {
 
       <Tabs defaultValue="faq" className="w-full">
         <TabsList className="grid grid-cols-4 gap-2">
-          <TabsTrigger value="faq">FAQ</TabsTrigger>
-          <TabsTrigger value="guides">Guides</TabsTrigger>
-          <TabsTrigger value="contact">Contact Support</TabsTrigger>
-          <TabsTrigger value="feedback">Feedback</TabsTrigger>
+          <TabsTrigger value="faq" className="hover:cursor-pointer">FAQ</TabsTrigger>
+          <TabsTrigger value="guides" className="hover:cursor-pointer">Guides</TabsTrigger>
+          <TabsTrigger value="contact" className="hover:cursor-pointer">Contact Support</TabsTrigger>
+          <TabsTrigger value="feedback" className="hover:cursor-pointer">Feedback</TabsTrigger>
         </TabsList>
 
         {/* FAQ Section */}

@@ -65,13 +65,13 @@ export default function Notification() {
   };
 
   return (
-    <div className="fixed top-2 right-6 z-50" ref={dropdownRef}>
+    <div className="fixed top-2 right-6 z-50 " ref={dropdownRef}>
       {/* 🔔 Notification Icon */}
       <button
         onClick={() => setOpen(!open)}
-        className="relative p-3 bg-white rounded-full shadow-lg hover:shadow-xl transition"
+        className="relative p-3 bg-white rounded-full shadow-lg hover:shadow-xl transition cursor-pointer"
       >
-        <Bell className="h-6 w-6 text-blue-600" />
+        <Bell className="h-6 w-6 text-blue-600 hover:h-8" />
 
         {/* Badge */}
         {notifications.length > 0 && (
