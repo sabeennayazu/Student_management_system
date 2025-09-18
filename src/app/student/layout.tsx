@@ -15,12 +15,14 @@ import {
   Settings,
   HelpCircle,
   Users,
+  Clock,
   LogOut,
 } from "lucide-react";
 
 // ✅ Define links BEFORE using them
 const links = [
   { name: "Learning Materials", href: "/student/learning-materials", icon: BookOpen },
+  { name: "Attendance", href: "/student/attendance", icon: Clock },
   { name: "Tasks", href: "/student/tasks", icon: ClipboardList },
   { name: "Exams", href: "/student/exams", icon: GraduationCap },
   { name: "Projects", href: "/student/projects", icon: FolderKanban },

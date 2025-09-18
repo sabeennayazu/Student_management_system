@@ -13,25 +13,19 @@ import {
 
 export default function ProjectsPage() {
   const [openMenu, setOpenMenu] = useState(false);
+  const [expanded, setExpanded] = useState<number | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setOpenMenu(false);
       }
     };
+    if (openMenu) document.addEventListener("mousedown", handleClickOutside);
+    else document.removeEventListener("mousedown", handleClickOutside);
 
-    if (openMenu) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [openMenu]);
 
   const projects = [
@@ -41,6 +35,9 @@ export default function ProjectsPage() {
       description: "Arduino-based traffic light control system",
       dueDate: "2025-07-15",
       team: ["John", "Alice"],
+      tools: ["Arduino UNO", "LEDs", "Resistors", "Breadboard", "Jumper wires"],
+      language: "C/C++ (Arduino IDE)",
+      shortDescription: "Control traffic lights automatically using Arduino.",
     },
     {
       title: "Line Following Robot",
@@ -48,6 +45,9 @@ export default function ProjectsPage() {
       description: "Autonomous robot using sensors and motors",
       dueDate: "2025-09-30",
       team: ["John", "Bob", "Carol"],
+      tools: ["Arduino UNO", "IR Sensors", "Motors", "Chassis"],
+      language: "C/C++ (Arduino IDE)",
+      shortDescription: "Robot that follows a line using sensor feedback.",
     },
     {
       title: "Decibel Meter",
@@ -55,6 +55,9 @@ export default function ProjectsPage() {
       description: "Sound level measurement device",
       dueDate: "2025-10-15",
       team: ["John"],
+      tools: ["Microphone sensor", "Arduino", "LCD Display"],
+      language: "C/C++ (Arduino IDE)",
+      shortDescription: "Measures ambient sound levels and displays them.",
     },
     {
       title: "Smart Home Automation",
@@ -62,6 +65,9 @@ export default function ProjectsPage() {
       description: "IoT-based home control system",
       dueDate: "2025-11-30",
       team: ["John", "David"],
+      tools: ["Raspberry Pi", "Relay Modules", "Sensors", "WiFi Module"],
+      language: "Python",
+      shortDescription: "Control home appliances remotely using IoT devices.",
     },
   ];
 
@@ -92,7 +98,7 @@ export default function ProjectsPage() {
   };
 
   return (
-    <div className="p-8  bg-white rounded-lg shadow-sm">
+    <div className="p-8 bg-white rounded-lg shadow-sm">
       <div className="flex justify-between items-center mb-8">
         <div>
           <h1 className="text-2xl font-light text-gray-900 mb-2">
@@ -103,7 +109,6 @@ export default function ProjectsPage() {
           </p>
         </div>
 
-        {/* Dropdown Menu */}
         <div className="relative" ref={menuRef}>
           <button
             className="p-3 rounded-xl hover:bg-gray-50 transition-colors duration-200"
@@ -126,8 +131,7 @@ export default function ProjectsPage() {
         </div>
       </div>
 
-      {/* Project Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {projects.map((project, index) => (
           <div
             key={index}
@@ -139,7 +143,7 @@ export default function ProjectsPage() {
                   {project.title}
                 </h3>
                 <p className="text-sm text-gray-600 mb-3">
-                  {project.description}
+                  {project.shortDescription}
                 </p>
               </div>
               <span
@@ -164,10 +168,39 @@ export default function ProjectsPage() {
               </div>
             </div>
 
+            {/* Expandable Details */}
             <div className="mt-4 pt-4 border-t border-gray-50">
-              <button className="text-sm text-gray-600 hover:text-gray-900 transition-colors duration-200 font-medium">
-                View Details →
+              <button
+                className="text-sm text-gray-600 hover:text-gray-900 transition-colors duration-200 font-medium flex items-center gap-2"
+                onClick={() =>
+                  setExpanded(expanded === index ? null : index)
+                }
+              >
+                {expanded === index ? "Hide Details" : "View Details"} →
               </button>
+
+              {expanded === index && (
+                <div className="mt-4 p-4 bg-gray-50 rounded-lg text-sm space-y-2">
+                  <p>
+                    <span className="font-semibold">Full Description:</span>{" "}
+                    {project.description}
+                  </p>
+                  <p>
+                    <span className="font-semibold">Tools / Items Used:</span>{" "}
+                    {project.tools.join(", ")}
+                  </p>
+                  {project.language && (
+                    <p>
+                      <span className="font-semibold">Programming Language:</span>{" "}
+                      {project.language}
+                    </p>
+                  )}
+                  <p>
+                    <span className="font-semibold">Team Members:</span>{" "}
+                    {project.team.join(", ")}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         ))}

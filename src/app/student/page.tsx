@@ -2,6 +2,7 @@
 
 import { CalendarDays, ClipboardList, Clock } from "lucide-react";
 import 'chart.js/auto';
+import Link from "next/link";
 import Notification from "./components/notification/page";
 
 // Custom Circular Progress Component
@@ -125,19 +126,34 @@ export default function DashboardPage() {
       <div className="space-y-8 p-8 max-w-7xl mx-auto">
         {/* Stats */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {stats.map((stat) => (
-            <div key={stat.label} href={link.href} className="bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 rounded-2xl cursor-pointer p-6 flex flex-col items-center h-44 justify-center border border-white/20">
-              <h3 className="text-lg font-semibold mb-3 text-gray-700">{stat.label}</h3>
-              {"color" in stat ? (
-                <CircularProgress value={Number(stat.value)} color={stat.color ?? "#000"} unit={stat.unit ?? ""} />
-              ) : (
-                <div className="flex flex-col items-center space-y-2">
-                  {stat.icon}
-                  <span className="text-lg font-bold text-gray-800">{stat.value}</span>
-                </div>
-              )}
-            </div>
-          ))}
+         {stats.map((stat, index) => {
+        const link = links.find((l) => l.name === stat.label); // match by label
+        return (
+          <Link
+            key={stat.label}
+            href={link?.href ?? "#"} // fallback if no link found
+            className="bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 rounded-2xl cursor-pointer p-6 flex flex-col items-center h-44 justify-center border border-white/20"
+          >
+            <h3 className="text-lg font-semibold mb-3 text-gray-700">
+              {stat.label}
+            </h3>
+            {"color" in stat ? (
+              <CircularProgress
+                value={Number(stat.value)}
+                color={stat.color ?? "#000"}
+                unit={stat.unit ?? ""}
+              />
+            ) : (
+              <div className="flex flex-col items-center space-y-2">
+                {stat.icon}
+                <span className="text-lg font-bold text-gray-800">
+                  {stat.value}
+                </span>
+              </div>
+            )}
+          </Link>
+        );
+      })}
         </div>
 
         {/* Attendance Overview */}
