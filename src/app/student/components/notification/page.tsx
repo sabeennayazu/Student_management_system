@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { useRouter } from "next/navigation"; // ✅ Import router
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Bell, Trophy, Bot, Brain, MoreVertical } from "lucide-react";
 
@@ -33,9 +33,9 @@ export default function Notification() {
 
   const [menuOpen, setMenuOpen] = useState<number | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const router = useRouter(); // ✅ Initialize router
+  const router = useRouter();
 
-  // Close dropdowns if clicked outside
+  // Close dropdown when clicked outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -50,7 +50,6 @@ export default function Notification() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Toggle read/unread
   const toggleRead = (index: number) => {
     setNotifications((prev) =>
       prev.map((n, i) => (i === index ? { ...n, read: !n.read } : n))
@@ -58,20 +57,21 @@ export default function Notification() {
     setMenuOpen(null);
   };
 
-  // Delete notification
   const deleteNotification = (index: number) => {
     setNotifications((prev) => prev.filter((_, i) => i !== index));
     setMenuOpen(null);
   };
 
   return (
-    <div className="fixed top-2 right-6 z-50 " ref={dropdownRef}>
-      {/* 🔔 Notification Icon */}
-      <button
+    <div className="fixed top-2 right-6 z-50" ref={dropdownRef}>
+      {/* 🔔 Notification Button */}
+      <motion.button
         onClick={() => setOpen(!open)}
-        className="relative p-3 bg-white rounded-full shadow-lg hover:shadow-xl transition cursor-pointer"
+        whileHover={{ scale: 1.2 }}
+        transition={{ type: "spring", stiffness: 300 }}
+        className="relative p-3 bg-white rounded-full shadow-lg hover:shadow-xl cursor-pointer"
       >
-        <Bell className="h-6 w-6 text-blue-600 hover:h-8" />
+        <Bell className="h-6 w-6 text-blue-600" />
 
         {/* Badge */}
         {notifications.length > 0 && (
@@ -79,7 +79,7 @@ export default function Notification() {
             {notifications.length}
           </span>
         )}
-      </button>
+      </motion.button>
 
       {/* Dropdown */}
       <AnimatePresence>
@@ -137,7 +137,7 @@ export default function Notification() {
                       }
                       className="p-1 rounded-full hover:bg-gray-100"
                     >
-                      <MoreVertical className="w-4 h-4 text-gray-500" />
+                      <MoreVertical className="w-4 h-4 text-gray-500 cursor-pointer" />
                     </button>
 
                     {/* Dropdown menu */}
@@ -145,13 +145,13 @@ export default function Notification() {
                       <div className="absolute right-0 mt-2 w-36 bg-white border rounded-md shadow-lg text-sm z-50">
                         <button
                           onClick={() => toggleRead(idx)}
-                          className="block w-full text-left px-3 py-2 hover:bg-gray-100 text-black"
+                          className="block w-full text-left px-3 py-2 cursor-pointer hover:bg-gray-100 text-black"
                         >
                           {n.read ? "Mark as Unread" : "Mark as Read"}
                         </button>
                         <button
                           onClick={() => deleteNotification(idx)}
-                          className="block w-full text-left px-3 py-2 hover:bg-gray-100 text-red-500"
+                          className="block w-full text-left px-3 py-2 cursor-pointer hover:bg-gray-100 text-red-500"
                         >
                           Delete
                         </button>
@@ -165,8 +165,8 @@ export default function Notification() {
             {/* Footer */}
             <div className="p-3 text-center bg-gray-50">
               <button
-                onClick={() => router.push("/student/notifications")} // ✅ Navigate
-                className="text-xs font-medium text-blue-600 hover:underline"
+                onClick={() => router.push("/student/notifications")}
+                className="text-xs font-medium cursor-pointer text-blue-600 hover:underline"
               >
                 View All Notifications
               </button>

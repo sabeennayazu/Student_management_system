@@ -16,7 +16,7 @@ export default function PersonalInfoPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 p-6">
+    <div className="min-h-screen bg-white p-6">
       <div className="max-w-6xl mx-auto">
         {/* Profile Header Card */}
 
@@ -25,7 +25,7 @@ export default function PersonalInfoPage() {
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Student Information Card */}
           <div className="bg-white rounded-3xl shadow-lg overflow-hidden border border-gray-100">
-            <div className="bg-gradient-to-r from-blue-500 to-blue-600 px-8 py-6">
+            <div className="bg-blue-500 px-8 py-6">
               <div className="flex items-center gap-3">
                 <div className="p-3 bg-white/20 rounded-full">
                   <User className="w-6 h-6 text-white" />
@@ -36,7 +36,7 @@ export default function PersonalInfoPage() {
             
             <div className="p-8 space-y-6">
               {/* Gender */}
-              <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
+              <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-200 transition-colors">
                 <div className="p-2 bg-purple-100 rounded-lg">
                   <UserCheck className="w-5 h-5 text-purple-600" />
                 </div>
@@ -47,7 +47,7 @@ export default function PersonalInfoPage() {
               </div>
 
               {/* Phone */}
-              <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
+              <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-200 transition-colors">
                 <div className="p-2 bg-green-100 rounded-lg">
                   <Phone className="w-5 h-5 text-green-600" />
                 </div>
@@ -58,7 +58,7 @@ export default function PersonalInfoPage() {
               </div>
 
               {/* Email */}
-              <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
+              <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-200 transition-colors">
                 <div className="p-2 bg-blue-100 rounded-lg">
                   <Mail className="w-5 h-5 text-blue-600" />
                 </div>
@@ -72,7 +72,7 @@ export default function PersonalInfoPage() {
 
           {/* Guardian Information Card */}
           <div className="bg-white rounded-3xl shadow-lg overflow-hidden border border-gray-100">
-            <div className="bg-gradient-to-r from-emerald-500 to-emerald-600 px-8 py-6">
+            <div className="bg-green-500 px-8 py-6">
               <div className="flex items-center gap-3">
                 <div className="p-3 bg-white/20 rounded-full">
                   <Users className="w-6 h-6 text-white" />
@@ -83,7 +83,7 @@ export default function PersonalInfoPage() {
             
             <div className="p-8 space-y-6">
               {/* Guardian Name */}
-              <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
+              <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-200 transition-colors">
                 <div className="p-2 bg-orange-100 rounded-lg">
                   <User className="w-5 h-5 text-orange-600" />
                 </div>
@@ -94,7 +94,7 @@ export default function PersonalInfoPage() {
               </div>
 
               {/* Guardian Phone */}
-              <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
+              <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-200 transition-colors">
                 <div className="p-2 bg-green-100 rounded-lg">
                   <Phone className="w-5 h-5 text-green-600" />
                 </div>
@@ -105,7 +105,7 @@ export default function PersonalInfoPage() {
               </div>
 
               {/* Guardian Relation */}
-              <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
+              <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-200 transition-colors">
                 <div className="p-2 bg-red-100 rounded-lg">
                   <Heart className="w-5 h-5 text-red-600" />
                 </div>

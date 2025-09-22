@@ -99,28 +99,26 @@ export default function AssessmentsPage() {
     <div className="p-8 border-gray-500 bg-white rounded-lg shadow-md">
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="text-2xl font-light text-gray-900 mb-2">Academic Assessments</h1>
+          <h1 className="text-2xl font-semibold text-gray-900 mb-2">Academic Assessments</h1>
           <p className="text-gray-600">Track your academic performance and progress</p>
         </div>
 
         <div className="relative" ref={menuRef}>
           <button
-            className="p-3 rounded-xl hover:bg-gray-50 transition-colors duration-200"
+            className="p-3 rounded-full hover:bg-gray-200 transition-colors duration-200"
             onClick={() => setOpenMenu(!openMenu)}
           >
-            <MoreVertical className="w-5 h-5 text-gray-400" />
+            <MoreVertical className="w-5 h-5 text-black cursor-pointer" />
           </button>
           {openMenu && (
-            <div className="absolute right-0 mt-2 w-44 bg-white rounded-xl shadow-lg border border-gray-100 z-50 overflow-hidden">
-              <button className="flex items-center gap-3 w-full text-left px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors duration-200">
+            <Link href="/student/results">
+            <div className="absolute right-0 mt-2 w-44 bg-white  rounded-xl shadow-lg border border-gray-100 z-50 overflow-hidden">
+              <button className="flex items-center gap-3 w-full text-left cursor-pointer px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors duration-200">
                 <BarChart3 className="w-4 h-4" />
                 View Analytics
               </button>
-              <button className="flex items-center gap-3 w-full text-left px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors duration-200">
-                <Plus className="w-4 h-4" />
-                Add Assessment
-              </button>
             </div>
+            </Link>
           )}
         </div>
       </div>

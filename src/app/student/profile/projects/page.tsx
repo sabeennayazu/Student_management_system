@@ -168,7 +168,7 @@ export default function ProjectsPage() {
     <div className="p-8 bg-white rounded-lg shadow-sm">
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="text-2xl font-light text-gray-900 mb-2">
+          <h1 className="text-2xl font-semibold text-gray-900 mb-2">
             Projects Portfolio
           </h1>
           <p className="text-gray-600">

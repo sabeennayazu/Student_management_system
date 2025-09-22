@@ -95,11 +95,11 @@ export default function CourseProgressPage() {
   }, []);
 
   return (
-    <div className="p-8 bg-gray-50 min-h-screen">
+    <div className="p-8 bg-white min-h-screen">
       {/* Header */}
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="text-2xl font-light text-gray-900 mb-2">Course Progress</h1>
+          <h1 className="text-2xl font-semibold text-gray-900 mb-2">Course Progress</h1>
           <p className="text-gray-600">Track your learning journey across different subjects</p>
         </div>
 

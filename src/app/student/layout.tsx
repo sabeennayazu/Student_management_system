@@ -77,7 +77,7 @@ export default function StudentLayout({ children }: { children: ReactNode }) {
         {/* Settings Dropdown */}
         <div className="relative mt-4">
           <button
-            className="w-full flex justify-between items-center px-3 py-2 rounded-lg text-gray-700 hover:bg-blue-100 hover:text-blue-700 font-medium transition-colors"
+            className="w-full flex justify-between items-center px-3 py-2 cursor-pointer rounded-lg text-gray-700 hover:bg-blue-100 hover:text-blue-700 font-medium transition-colors"
             onClick={() => setSettingsOpen(!settingsOpen)}
           >
             <div className="flex items-center gap-3">

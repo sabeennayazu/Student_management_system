@@ -98,9 +98,9 @@ export default function SkillsPage() {
   }
 
   return (
-    <div className="p-8 bg-gray-50 min-h-screen">
+    <div className="p-8 bg-white min-h-screen">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-2xl font-bold text-black">Skills & Expertise</h1>
+        <h1 className="text-2xl font-semibold text-black">Skills & Expertise</h1>
         <div className="relative" ref={menuRef}>
           <button
             className="p-2 rounded-full hover:bg-gray-200"
@@ -141,7 +141,7 @@ export default function SkillsPage() {
             onClick={() => setSelectedSkill(skill)}
             className="p-4 border rounded-xl bg-white shadow-sm hover:shadow-md transition cursor-pointer"
           >
-            <h3 className="font-semibold text-black">{skill.title}</h3>
+            <h3 className="font-light-bold text-black">{skill.title}</h3>
           </div>
         ))}
       </div>
