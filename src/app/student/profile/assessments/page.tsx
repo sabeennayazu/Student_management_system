@@ -125,7 +125,8 @@ export default function AssessmentsPage() {
 
       {/* Summary Stats */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="p-6 rounded-xl border border-gray-300 shadow-md bg-white">
+        <div className="p-6 rounded-xl border border-gray-300 shadow-md hover:-translate-y-1 
+                       transition duration-200 ease-in-out hover:shadow-lg bg-white">
           <div className="flex items-center gap-3 mb-2">
             <div className="p-2 rounded-lg bg-indigo-50">
               <Award className="w-5 h-5 text-indigo-600" />
@@ -136,7 +137,8 @@ export default function AssessmentsPage() {
         </div>
           
           <Link href={"/student/results"}>
-        <div className="p-6 rounded-xl border border-gray-300 shadow-md bg-white">
+        <div className="p-6 rounded-xl border border-gray-300 shadow-md hover:-translate-y-1 
+                       transition duration-200 ease-in-out hover:shadow-lg bg-white">
           <div className="flex items-center gap-3 mb-2">
             <div className="p-2 rounded-lg bg-indigo-50">
               <FileText className="w-5 h-5 text-indigo-600" />
@@ -153,7 +155,8 @@ export default function AssessmentsPage() {
         {assessments.map((assessment, index) => (
           <div
             key={index}
-            className="group p-6 rounded-xl border border-gray-300 shadow-sm hover:border-gray-200 hover:shadow-md transition-all duration-200 bg-white"
+            className="group p-6 rounded-xl border border-gray-300 shadow-md hover:border-gray-200 hover:shadow-lg hover:-translate-y-1 
+                       transition duration-200 ease-in-out bg-white"
           >
             <div className="flex items-start justify-between mb-4">
               <div className="flex-1">

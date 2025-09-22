@@ -216,7 +216,8 @@ export default function ProjectsPage() {
         {projects.map((project, index) => (
           <div
             key={index}
-            className="group p-6 rounded-xl border border-gray-300 shadow-sm hover:border-gray-200 hover:shadow-md transition-all duration-200 bg-white"
+            className="group p-6 rounded-xl border border-gray-300 shadow-md hover:border-gray-200 hover:shadow-lg hover:-translate-y-1 
+                       transition duration-200 ease-in-out bg-white"
           >
             <div className="flex items-start justify-between mb-4">
               <div className="flex-1">

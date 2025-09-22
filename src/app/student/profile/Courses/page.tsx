@@ -131,7 +131,8 @@ export default function CourseProgressPage() {
           return (
             <div
               key={index}
-              className="group p-6 rounded-xl border border-gray-300 shadow-sm hover:shadow-md transition bg-white"
+              className="group p-6 rounded-xl border border-gray-300 shadow-sm hover:shadow-lg bg-white hover:-translate-y-1 
+                       transition duration-200 ease-in-out"
             >
               {/* Title + Info */}
               <div className="flex items-start justify-between mb-4">

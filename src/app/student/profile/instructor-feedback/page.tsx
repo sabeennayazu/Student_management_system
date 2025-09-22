@@ -102,7 +102,8 @@ export default function FeedbackPage() {
         {feedbacks.map((feedback, index) => (
           <div
             key={index}
-            className="group p-6 rounded-xl border border-gray-200 shadow-md hover:border-blue-200 hover:shadow-lg transition-all duration-200 bg-white"
+            className="group p-6 rounded-xl border border-gray-200 shadow-md hover:border-blue-200 hover:shadow-lg hover:-translate-y-1 
+                       transition duration-200 ease-in-out bg-white"
           >
             <div className="flex items-start gap-4">
               <div className="w-12 h-12 rounded-full bg-red-400  flex items-center justify-center text-white font-bold text-sm">

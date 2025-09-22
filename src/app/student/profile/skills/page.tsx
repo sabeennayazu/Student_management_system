@@ -9,7 +9,7 @@ export default function SkillsPage() {
   const [selectedSkill, setSelectedSkill] = useState<null | Skill>(null);
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
-  const [editingSkill, setEditingSkill] = useState<Skill | null>(null); // 👈 for editing a skill
+  const [editingSkill, setEditingSkill] = useState<Skill | null>(null);
   const [skills, setSkills] = useState<Skill[]>([
     {
       title: "Arduino Programming",
@@ -134,14 +134,17 @@ export default function SkillsPage() {
         </div>
       </div>
 
+      {/* Skills Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {skills.map((skill, index) => (
           <div
             key={index}
             onClick={() => setSelectedSkill(skill)}
-            className="p-4 border rounded-xl bg-white shadow-sm hover:shadow-md transition cursor-pointer"
+            className="p-4 border rounded-xl bg-white shadow-sm 
+                       hover:shadow-lg hover:border-gray-300 hover:-translate-y-1 
+                       transition duration-200 ease-in-out cursor-pointer"
           >
-            <h3 className="font-light-bold text-black">{skill.title}</h3>
+            <h3 className="font-medium text-gray-900">{skill.title}</h3>
           </div>
         ))}
       </div>
@@ -219,7 +222,11 @@ export default function SkillsPage() {
         ) : (
           <div className="space-y-3">
             {skills.map((skill, i) => (
-              <div key={i} className="flex justify-between items-center border p-3 rounded-lg">
+              <div
+                key={i}
+                className="flex justify-between items-center border p-3 rounded-lg 
+                           hover:bg-gray-50 hover:border-blue-200 transition duration-200 ease-in-out"
+              >
                 <span className="font-medium">{skill.title}</span>
                 <button
                   onClick={() => {
