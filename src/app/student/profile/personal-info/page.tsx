@@ -1,5 +1,7 @@
 "use client";
 
+import { User, Phone, Mail, Users, UserCheck, Heart } from "lucide-react";
+
 export default function PersonalInfoPage() {
   const student = {
     name: "Sabin Nayaju",
@@ -14,37 +16,123 @@ export default function PersonalInfoPage() {
   };
 
   return (
-    <div className="p-10 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen flex justify-center">
-      <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-3xl">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <div className="w-24 h-24 mx-auto rounded-full bg-blue-100 flex items-center justify-center text-3xl font-bold text-blue-700 shadow-md">
-            {student.name.charAt(0)}
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 p-6">
+      <div className="max-w-6xl mx-auto">
+        {/* Profile Header Card */}
+
+
+        {/* Info Cards Grid */}
+        <div className="grid lg:grid-cols-2 gap-8">
+          {/* Student Information Card */}
+          <div className="bg-white rounded-3xl shadow-lg overflow-hidden border border-gray-100">
+            <div className="bg-gradient-to-r from-blue-500 to-blue-600 px-8 py-6">
+              <div className="flex items-center gap-3">
+                <div className="p-3 bg-white/20 rounded-full">
+                  <User className="w-6 h-6 text-white" />
+                </div>
+                <h2 className="text-2xl font-bold text-white">Student Info</h2>
+              </div>
+            </div>
+            
+            <div className="p-8 space-y-6">
+              {/* Gender */}
+              <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
+                <div className="p-2 bg-purple-100 rounded-lg">
+                  <UserCheck className="w-5 h-5 text-purple-600" />
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500 font-medium">Gender</p>
+                  <p className="text-lg text-gray-900 font-semibold">{student.gender}</p>
+                </div>
+              </div>
+
+              {/* Phone */}
+              <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
+                <div className="p-2 bg-green-100 rounded-lg">
+                  <Phone className="w-5 h-5 text-green-600" />
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500 font-medium">Phone</p>
+                  <p className="text-lg text-gray-900 font-semibold">{student.phone}</p>
+                </div>
+              </div>
+
+              {/* Email */}
+              <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
+                <div className="p-2 bg-blue-100 rounded-lg">
+                  <Mail className="w-5 h-5 text-blue-600" />
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500 font-medium">Email</p>
+                  <p className="text-lg text-gray-900 font-semibold">{student.email}</p>
+                </div>
+              </div>
+            </div>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mt-4">{student.name}</h1>
-          <p className="text-gray-600">Class {student.class} • Section {student.section}</p>
+
+          {/* Guardian Information Card */}
+          <div className="bg-white rounded-3xl shadow-lg overflow-hidden border border-gray-100">
+            <div className="bg-gradient-to-r from-emerald-500 to-emerald-600 px-8 py-6">
+              <div className="flex items-center gap-3">
+                <div className="p-3 bg-white/20 rounded-full">
+                  <Users className="w-6 h-6 text-white" />
+                </div>
+                <h2 className="text-2xl font-bold text-white">Guardian Info</h2>
+              </div>
+            </div>
+            
+            <div className="p-8 space-y-6">
+              {/* Guardian Name */}
+              <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
+                <div className="p-2 bg-orange-100 rounded-lg">
+                  <User className="w-5 h-5 text-orange-600" />
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500 font-medium">Name</p>
+                  <p className="text-lg text-gray-900 font-semibold">{student.guardianName}</p>
+                </div>
+              </div>
+
+              {/* Guardian Phone */}
+              <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
+                <div className="p-2 bg-green-100 rounded-lg">
+                  <Phone className="w-5 h-5 text-green-600" />
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500 font-medium">Phone</p>
+                  <p className="text-lg text-gray-900 font-semibold">{student.guardianPhone}</p>
+                </div>
+              </div>
+
+              {/* Guardian Relation */}
+              <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
+                <div className="p-2 bg-red-100 rounded-lg">
+                  <Heart className="w-5 h-5 text-red-600" />
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500 font-medium">Relation</p>
+                  <p className="text-lg text-gray-900 font-semibold">{student.guardianRelation}</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* Info Sections */}
-        <div className="grid md:grid-cols-2 gap-8">
-          {/* Student Info */}
-          <div className="bg-gray-50 p-6 rounded-xl border border-gray-200">
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">Student Info</h2>
-            <ul className="space-y-3 text-gray-700">
-              <li><span className="font-medium">Gender:</span> {student.gender}</li>
-              <li><span className="font-medium">Phone:</span> {student.phone}</li>
-              <li><span className="font-medium">Email:</span> {student.email}</li>
-            </ul>
-          </div>
-
-          {/* Guardian Info */}
-          <div className="bg-gray-50 p-6 rounded-xl border border-gray-200">
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">Guardian Info</h2>
-            <ul className="space-y-3 text-gray-700">
-              <li><span className="font-medium">Name:</span> {student.guardianName}</li>
-              <li><span className="font-medium">Phone:</span> {student.guardianPhone}</li>
-              <li><span className="font-medium">Relation:</span> {student.guardianRelation}</li>
-            </ul>
+        {/* Quick Stats Bar */}
+        <div className="mt-8 bg-white rounded-3xl shadow-lg p-6 border border-gray-100">
+          <div className="grid grid-cols-3 divide-x divide-gray-200">
+            <div className="text-center px-6">
+              <div className="text-3xl font-bold text-blue-600">10</div>
+              <div className="text-gray-500 font-medium">Current Class</div>
+            </div>
+            <div className="text-center px-6">
+              <div className="text-3xl font-bold text-emerald-600">A</div>
+              <div className="text-gray-500 font-medium">Section</div>
+            </div>
+            <div className="text-center px-6">
+              <div className="text-3xl font-bold text-purple-600">2024</div>
+              <div className="text-gray-500 font-medium">Academic Year</div>
+            </div>
           </div>
         </div>
       </div>

@@ -168,7 +168,7 @@ export default function ExamDashboard() {
     }
   }}
   value={date}
-  className="rounded-lg w-full text-black"
+  className="rounded-lg w-full my-10 py-4 text-black"
   tileClassName={({ date }) => {
     if (exams.some((exam) => isSameDay(parseISO(exam.date), date))) {
       return "relative text-blue-600 font-semibold"; // text styling

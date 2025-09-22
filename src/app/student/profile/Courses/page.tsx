@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 import {
   MoreVertical,
@@ -104,17 +105,19 @@ export default function CourseProgressPage() {
 
         <div className="relative" ref={menuRef}>
           <button
-            className="p-3 rounded-xl hover:bg-gray-50 transition-colors"
+            className="p-3 rounded-full cursor-pointer hover:bg-gray-200 transition-colors"
             onClick={() => setOpenMenu(!openMenu)}
           >
-            <MoreVertical className="w-5 h-5 text-gray-400" />
+            <MoreVertical className="w-5 h-5 text-black" />
           </button>
           {openMenu && (
             <div className="absolute right-0 mt-2 w-44 bg-white rounded-xl shadow-lg border border-gray-100 z-50 overflow-hidden">
-              <button className="flex items-center gap-3 w-full text-left px-4 py-3 text-gray-700 hover:bg-gray-50">
+              <Link href="/student/learning-materials">
+              <button className="flex items-center gap-3 w-full text-left px-4 py-3 text-gray-700 hover:bg-gray-200">
                 <BookOpen className="w-4 h-4" />
                 View All Courses
               </button>
+              </Link>
             </div>
           )}
         </div>
@@ -170,7 +173,7 @@ export default function CourseProgressPage() {
               {/* Footer */}
               <div className="mt-4 pt-4 border-t border-gray-50">
                 <button
-                  className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 font-medium"
+                  className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 font-medium cursor-pointer"
                   onClick={() =>
                     setExpanded(expanded === index ? null : index)
                   }
@@ -206,15 +209,13 @@ export default function CourseProgressPage() {
                     </ul>
                   </div>
                   <div className="flex gap-3 pt-2">
-                    <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700">
+                    <Link href="/student/learning-materials">
+                    <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white cursor-pointer hover:bg-blue-700">
                       <ArrowRight className="w-4 h-4" />
                       Go to Materials
                     </button>
-                    {course.status !== "Completed" && (
-                      <button className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100">
-                        Mark Complete
-                      </button>
-                    )}
+                    </Link>
+                   
                   </div>
                 </div>
               )}

@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { MoreVertical, FileText, Calendar, Award, BarChart3, Plus } from "lucide-react";
+import Link from "next/link";
 
 export default function AssessmentsPage() {
   const [openMenu, setOpenMenu] = useState(false);
@@ -135,7 +136,8 @@ export default function AssessmentsPage() {
           </div>
           <p className="text-2xl font-semibold text-gray-900">{averageScore}%</p>
         </div>
-
+          
+          <Link href={"/student/results"}>
         <div className="p-6 rounded-xl border border-gray-300 shadow-md bg-white">
           <div className="flex items-center gap-3 mb-2">
             <div className="p-2 rounded-lg bg-indigo-50">
@@ -145,6 +147,7 @@ export default function AssessmentsPage() {
           </div>
           <p className="text-2xl font-semibold text-gray-900">{assessments.length}</p>
         </div>
+          </Link>
       </div>
 
       {/* Assessments List */}
@@ -184,7 +187,7 @@ export default function AssessmentsPage() {
                 })}
               </div>
               <button
-                className="text-sm text-gray-600 hover:text-gray-900 transition-colors duration-200 font-medium"
+                className="text-sm text-blue-600 hover:text-gray-900 transition-colors duration-200 font-medium cursor-pointer"
                 onClick={() => setExpanded(expanded === index ? null : index)}
               >
                 {expanded === index ? "Hide Details" : "View Details"} →
@@ -209,8 +212,8 @@ export default function AssessmentsPage() {
 
       <div className="mt-8 pt-6 border-t border-gray-100">
         <button
-          onClick={() => router.push("/student/tasks")}
-          className="px-6 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-colors duration-200 font-medium"
+          onClick={() => router.push("/student/results")}
+          className="px-6 py-3 bg-indigo-600 text-white rounded-xl cursor-pointer hover:bg-indigo-700 transition-colors duration-200 font-medium"
         >
           View Full Report
         </button>

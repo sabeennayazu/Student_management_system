@@ -157,6 +157,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Attendance Overview */}
+        <Link href="/student/attendance">
         <div className="bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer rounded-2xl p-8 border border-white/20">
           <h3 className="text-xl font-semibold mb-6 text-gray-800">Attendance Overview</h3>
           <div className="flex flex-col md:flex-row items-center gap-8">
@@ -195,9 +196,9 @@ export default function DashboardPage() {
             </div>
           </div>
         </div>
-
+        </Link>
         {/* Next Class */}
-        <div className="bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 rounded-2xl p-8 border border-white/20">
+        <div className="bg-white/80 my-6 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 rounded-2xl p-8 border border-white/20">
           <h3 className="text-xl font-semibold mb-4 text-gray-800">Next Class</h3>
           <div className="flex items-center gap-6">
             <div className="flex-1">

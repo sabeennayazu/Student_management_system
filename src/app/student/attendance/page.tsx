@@ -123,26 +123,33 @@ export default function StudentAttendancePage() {
         />
       </div>
 
-      {/* Filters */}
-      <div className="flex justify-center mt-4 ">
-        <div className="bg-white mt-6 px-8 py-6 rounded-xl shadow-md flex justify-center gap-8 items-center w-fit transition-shadow hover:shadow-lg">
-          <input
-            type="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            className="border rounded-lg p-2 px-4"
-          />
-          <select
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
-            className="border rounded-lg p-2 px-4"
-          >
-            <option value="All">By Date</option>
-            <option value="Monthly">Monthly</option>
-            <option value="Yearly">Yearly</option>
-          </select>
-        </div>
-      </div>
+   {/* Filters */}
+<div className="flex justify-center mt-6">
+  <div className="bg-white px-6 py-5 rounded-xl shadow-md w-full max-w-2xl">
+    <div className="grid grid-cols-2 gap-4">
+      <input
+        type="date"
+        value={date}
+        onChange={(e) => {
+          setDate(e.target.value);
+          setFilter("All"); // 👈 force dropdown to switch to "By Date"
+        }}
+        className="w-full border border-gray-300 rounded-lg p-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+      />
+      <select
+        value={filter}
+        onChange={(e) => setFilter(e.target.value)}
+        className="w-full border border-gray-300 rounded-lg p-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+      >
+        <option value="All">By Date</option>
+        <option value="Monthly">Monthly</option>
+        <option value="Yearly">Yearly</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+
 
       {/* Students Table */}
       <div className="mt-6 mb-6 pb-1 bg-white rounded-xl shadow-md overflow-hidden transition-shadow hover:shadow-lg">
